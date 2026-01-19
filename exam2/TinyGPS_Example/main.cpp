@@ -8,36 +8,7 @@
 
 TinyGPSPlus gps;
 
-void displayInfo();
-
-void setup()
-{
-    setupBoards();
-
-    // When the power is turned on, a delay is required.
-    delay(1500);
-
-    Serial.println(F("DeviceExample.ino"));
-    Serial.println(F("A simple demonstration of TinyGPS++ with an attached GPS module"));
-    Serial.print(F("Testing TinyGPS++ library v. "));
-    Serial.println(TinyGPSPlus::libraryVersion());
-    Serial.println(F("by Mikal Hart"));
-    Serial.println();
-}
-
-void loop()
-{
-    // This sketch displays information every time a new sentence is correctly encoded.
-    while (SerialGPS.available() > 0)
-        if (gps.encode(SerialGPS.read()))
-            displayInfo();
-
-    if (millis() > 15000 && gps.charsProcessed() < 10) {
-        Serial.println(F("No GPS detected: check wiring."));
-        delay(15000);
-    }
-}
-
+//=======================================================================================
 void displayInfo()
 {
     Serial.print(F("Location: "));
@@ -79,3 +50,33 @@ void displayInfo()
 
     Serial.println();
 }
+
+
+//=======================================================================================
+void setup()
+{
+    setupBoards();
+
+    // When the power is turned on, a delay is required.
+    delay(1500);
+
+    Serial.println("DeviceExample.ino");
+    Serial.println("A simple demonstration of TinyGPS++ with an attached GPS module");
+    Serial.print("Testing TinyGPS++ library v. ");
+    Serial.println(TinyGPSPlus::libraryVersion());
+    Serial.println("by Mikal Hart\n");
+}
+
+//=======================================================================================
+void loop()
+{
+    // This sketch displays information every time a new sentence is correctly encoded.
+    while (SerialGPS.available() > 0)
+        if (gps.encode(SerialGPS.read())) displayInfo();
+
+    if (millis() > 15000 && gps.charsProcessed() < 10) {
+        Serial.println(F("No GPS detected: check wiring."));
+        delay(15000);
+    }
+}
+

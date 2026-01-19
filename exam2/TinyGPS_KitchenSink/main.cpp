@@ -11,6 +11,7 @@ TinyGPSPlus gps;
 // For stats that happen every 5 seconds
 unsigned long last = 0UL;
 
+//=======================================================================================
 void setup()
 {
     setupBoards();
@@ -25,6 +26,7 @@ void setup()
     Serial.println();
 }
 
+//=======================================================================================
 void loop()
 {
     // This sketch displays information every time a new sentence is correctly encoded.
@@ -137,26 +139,20 @@ void loop()
     else if (millis() - last > 5000) {
         Serial.println();
         if (gps.location.isValid()) {
-            static const double LONDON_LAT = 51.508131, LONDON_LON = -0.128002;
-            double distanceToLondon =
+			static const double WIEN_LAT = 48.20849, WIEN_LON = 16.37208;
+            double distanceToWIEN =
                 TinyGPSPlus::distanceBetween(
-                    gps.location.lat(),
-                    gps.location.lng(),
-                    LONDON_LAT,
-                    LONDON_LON);
-            double courseToLondon =
+                    gps.location.lat(), gps.location.lng(), WIEN_LAT, WIEN_LON);
+            double courseToWIEN =
                 TinyGPSPlus::courseTo(
-                    gps.location.lat(),
-                    gps.location.lng(),
-                    LONDON_LAT,
-                    LONDON_LON);
+                    gps.location.lat(), gps.location.lng(), WIEN_LAT, WIEN_LON);
 
-            Serial.print(F("LONDON     Distance="));
-            Serial.print(distanceToLondon / 1000, 6);
+            Serial.print(F("WIEN     Distance="));
+            Serial.print(distanceToWIEN / 1000, 6);
             Serial.print(F(" km Course-to="));
-            Serial.print(courseToLondon, 6);
+            Serial.print(courseToWIEN, 6);
             Serial.print(F(" degrees ["));
-            Serial.print(TinyGPSPlus::cardinal(courseToLondon));
+            Serial.print(TinyGPSPlus::cardinal(courseToWIEN));
             Serial.println(F("]"));
         }
 
@@ -169,8 +165,7 @@ void loop()
         Serial.print(F(" Passed-checksum="));
         Serial.println(gps.passedChecksum());
 
-        if (gps.charsProcessed() < 10)
-            Serial.println(F("WARNING: No GPS data.  Check wiring."));
+        if (gps.charsProcessed() < 10) Serial.println(F("WARNING: No GPS data.  Check wiring."));
 
         last = millis();
         Serial.println();
