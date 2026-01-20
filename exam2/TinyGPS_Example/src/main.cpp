@@ -191,39 +191,42 @@ void displayInfo() {
     if (disp) {
         disp->clearBuffer();
         disp->setFont(u8g2_font_crox1h_tr);
-        disp->setCursor(5, 12); disp->print("LAT: ");
-        disp->setCursor(5, 24); disp->print("LON: ");
-        disp->setCursor(5, 36); disp->print("Date: ");
-        disp->setCursor(5, 48); disp->print("Time: ");
+        disp->setCursor(1, 12); disp->print("LAT: ");
+        disp->setCursor(1, 24); disp->print("LON: ");
+        disp->setCursor(1, 36); disp->print("Date: ");
+        disp->setCursor(1, 48); disp->print("Time: ");
 
         if (gps.location.isValid()) {
-            disp->setCursor(40, 12); disp->print(gps.location.lat(), 6);
-            disp->setCursor(40, 24); disp->print(gps.location.lng(), 6);
+            disp->setCursor(35, 12); disp->print(gps.location.lat(), 6);
+            disp->setCursor(35, 24); disp->print(gps.location.lng(), 6);
         } else {
             disp->setCursor(40, 12); disp->print("INVALID");
             disp->setCursor(40, 24); disp->print("INVALID");
         }
         if (gps.date.isValid()) {
-            disp->setCursor(50, 36); disp->printf("%u. %u. %u", gps.date.day(),gps.date.month(),gps.date.year());
+            disp->setCursor(35, 36); disp->printf("%u. %u. %u", gps.date.day(),gps.date.month(),gps.date.year());
         } else {
-            disp->setCursor(50, 36); disp->print("INVALID");
+            disp->setCursor(40, 36); disp->print("INVALID");
         }
         if (gps.time.isValid()) {
-            disp->setCursor(50, 48); disp->printf("%2u:%2u:%2u.%2u", gps.time.hour(),gps.time.minute(),gps.time.second(),gps.time.centisecond());
+            disp->setCursor(35, 48); disp->printf("%2u:%2u:%2u.%2u   UTC", gps.time.hour(),gps.time.minute(),gps.time.second(),gps.time.centisecond());
         } else {
-            disp->setCursor(50, 48); disp->print("INVALID");
+            disp->setCursor(40, 48); disp->print("INVALID");
         }
         if (gps.satellites.isValid()) {
-            disp->setCursor(5, 60); disp->printf("Sats: %u", gps.satellites.value());
+            disp->setCursor(1, 60); disp->printf("Sats: %u", gps.satellites.value());
         }
         if (gps.hdop.isValid()) {
             disp->setCursor(50, 60); disp->printf("HDOP: %4.1f", gps.hdop.value()/100.0);
         }
 
         if (gps.altitude.isValid()) {
-            disp->setCursor(U8G2_HOR_ALIGN_RIGHT(String(gps.altitude.meters()).c_str()) - 5, 12);
-            disp->setCursor(U8G2_HOR_ALIGN_RIGHT("m ") - 5, 24);
+            disp->setCursor(U8G2_HOR_ALIGN_RIGHT(String(gps.altitude.meters()).c_str()), 12);
+            disp->print(gps.altitude.meters());
         }        
+        disp->setCursor(U8G2_HOR_ALIGN_RIGHT("m  "), 24);
+        disp->print("m ");
+
         disp->sendBuffer();
     }
 }
