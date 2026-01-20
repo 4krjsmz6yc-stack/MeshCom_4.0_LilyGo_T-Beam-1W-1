@@ -116,7 +116,7 @@ void setup()
     Serial.begin(115200);
     while (!Serial);
     for (int i=0;i<10;i++) {
-        Serial.print(".");
+        Serial.println(".");
         delay(1000);
     }
     Serial.println("\nSetup Board");
