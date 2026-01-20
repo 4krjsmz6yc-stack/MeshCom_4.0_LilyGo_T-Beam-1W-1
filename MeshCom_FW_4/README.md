@@ -13,8 +13,8 @@
 - [x] On-Board-**LED** (**`--board led {on|off}`**)
 - [x] User-**BUTTON** (**`--button gpio 17 --button on --reboot`**, LongPress = Display on/off, Click = Screens blättern, DoubleClick = Track POS sent, TrippleClick = POS-Anzeige on/off)
 - [x] **LoRa**: SX1262 RX [**FW 4.35l.01.18.b**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/releases/tag/4.35l.01.18.b)
+- [x] **GPS**: L76K [TinyGPS-Example](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/exam2/TinyGPS_Example/firmware)
 - [ ] **LoRa**: SX1262 TX
-- [ ] **GPS**: L76K
 - [ ] **BATT**
 - [ ] **OTA** noch ausführlich testen
 - [ ] tools/**download_meshcom.py** u.a. noch anpassen
@@ -27,5 +27,5 @@
 
 
 ---
-***18.1.2026 by OE3WAS - Wolfgang***
+***20.1.2026 by OE3WAS - Wolfgang***
 
