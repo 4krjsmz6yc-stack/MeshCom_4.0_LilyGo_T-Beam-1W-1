@@ -3,10 +3,25 @@
   Base on TinyGPSPlus //https://github.com/mikalhart/TinyGPSPlus
 */
 
-#include "LoRaBoards.h"
+#include <Arduino.h>
+#include <SPI.h>
+#include <Wire.h>
+#include <esp_mac.h>
+#include "soc/rtc.h"
+
+#if defined(ARDUINO_ARCH_ESP32)
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5,0,0)
+#include "hal/gpio_hal.h"
+#endif
+#include "driver/gpio.h"
+#endif //ARDUINO_ARCH_ESP32
+
 #include <TinyGPS++.h>
 
+#include "configuration.h"
+
 TinyGPSPlus gps;
+#define SerialGPS Serial1
 
 //=======================================================================================
 void displayInfo()
@@ -55,8 +70,39 @@ void displayInfo()
 //=======================================================================================
 void setup()
 {
-    setupBoards();
+    //setupBoards();
+    Serial.begin(115200);
+    while (!Serial);
+    for (int i=0;i<10;i++) {
+        Serial.print(".");
+        delay(1000);
+    }
+    Serial.println("\nSetup Board");
 
+    //getChipInfo();
+    #ifdef I2C_SDA
+        Wire.begin(I2C_SDA, I2C_SCL);
+    #endif
+
+#ifdef HAS_GPS
+
+#ifdef GPS_EN_PIN
+    pinMode(GPS_EN_PIN, OUTPUT);
+    digitalWrite(GPS_EN_PIN, HIGH);
+#endif /*GPS_EN_PIN*/
+
+#ifdef GPS_PPS_PIN
+    pinMode(GPS_PPS_PIN, INPUT);
+#endif
+
+#if defined(ARDUINO_ARCH_ESP32)
+    SerialGPS.begin(GPS_BAUD_RATE, SERIAL_8N1, GPS_RX_PIN, GPS_TX_PIN);
+#elif defined(ARDUINO_ARCH_STM32)
+    SerialGPS.setRx(GPS_RX_PIN);
+    SerialGPS.setTx(GPS_TX_PIN);
+    SerialGPS.begin(GPS_BAUD_RATE);
+#endif // ARDUINO_ARCH_
+#endif // HAS_GPS
     // When the power is turned on, a delay is required.
     delay(1500);
 
