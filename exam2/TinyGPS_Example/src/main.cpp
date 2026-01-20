@@ -60,12 +60,10 @@ Timeout timerSerial;
     
 #endif  //DISPLAY_MODEL
 
-#ifdef HAS_GPS
-    TinyGPSPlus gps;
-    #define SerialGPS Serial1
-    static bool find_gps = false;
-    String gps_model = "None";
-
+TinyGPSPlus gps;
+#define SerialGPS Serial1
+static bool find_gps = false;
+String gps_model = "None";
 
 
 bool l76kProbe()
@@ -139,38 +137,93 @@ bool beginGPS()
     return result;
 }
 
-#endif  //HAS_GPS
+//=======================================================================================
+// This custom version of delay() ensures that the gps object is being "fed".
+static void smartDelay(unsigned long ms)
+{
+    unsigned long start = millis();
+    do {
+        while (SerialGPS.available())
+            gps.encode(SerialGPS.read());
+    } while (millis() - start < ms);
+}
+
+//=======================================================================================
+static void printInt(unsigned long val, bool valid, int len)
+{
+    char sz[32] = "*****************";
+    if (valid) sprintf(sz, "%ld", val);
+    sz[len] = 0;
+    for (int i = strlen(sz); i < len; ++i) sz[i] = ' ';
+    if (len > 0) sz[len - 1] = ' ';
+    Serial.print(sz);
+    smartDelay(0);
+}
+
+//=======================================================================================
+static void printFloat(float val, bool valid, int len, int prec)
+{
+    if (!valid) {
+        while (len-- > 1) Serial.print('*');
+        Serial.print(' ');
+    } else {
+        Serial.print(val, prec);
+        int vi = abs((int)val);
+        int flen = prec + (val < 0.0 ? 2 : 1); // . and -
+        flen += vi >= 1000 ? 4 : vi >= 100 ? 3 : vi >= 10 ? 2 : 1;
+        for (int i = flen; i < len; ++i)
+            Serial.print(' ');
+    }
+    smartDelay(0);
+}
+
+//=======================================================================================
+static void printStr(const char *str, int len)
+{
+    int slen = strlen(str);
+    for (int i = 0; i < len; ++i) Serial.print(i < slen ? str[i] : ' ');
+    smartDelay(0);
+}
 
 
 
 void displayInfo() {
     if (disp) {
         disp->clearBuffer();
-        disp->setFont(u8g2_font_pxplusibmvga8_mr);
-        disp->setCursor(5, 15); disp->print("LAT: ");
-        disp->setCursor(5, 30); disp->print("LON: ");
-        disp->setCursor(5, 45); disp->print("Date: ");
-        disp->setCursor(5, 60); disp->print("Time: ");
-
         disp->setFont(u8g2_font_crox1h_tr);
+        disp->setCursor(5, 12); disp->print("LAT: ");
+        disp->setCursor(5, 24); disp->print("LON: ");
+        disp->setCursor(5, 36); disp->print("Date: ");
+        disp->setCursor(5, 48); disp->print("Time: ");
+
         if (gps.location.isValid()) {
-            disp->setCursor(40, 15); disp->print(gps.location.lat(), 6);
-            disp->setCursor(40, 30); disp->print(gps.location.lng(), 6);
+            disp->setCursor(40, 12); disp->print(gps.location.lat(), 6);
+            disp->setCursor(40, 24); disp->print(gps.location.lng(), 6);
         } else {
-            disp->setCursor(40, 15); disp->print("INVALID");
-            disp->setCursor(40, 30); disp->print("INVALID");
+            disp->setCursor(40, 12); disp->print("INVALID");
+            disp->setCursor(40, 24); disp->print("INVALID");
         }
         if (gps.date.isValid()) {
-            disp->setCursor(50, 45); disp->printf("%u. %u. %u", gps.date.day(),gps.date.month(),gps.date.year());
+            disp->setCursor(50, 36); disp->printf("%u. %u. %u", gps.date.day(),gps.date.month(),gps.date.year());
         } else {
-            disp->setCursor(50, 45); disp->print("INVALID");
+            disp->setCursor(50, 36); disp->print("INVALID");
         }
         if (gps.time.isValid()) {
-            disp->setCursor(50, 60); disp->printf("%2u:%2u:%2u.%2u", gps.time.hour(),gps.time.minute(),gps.time.second(),gps.time.centisecond());
+            disp->setCursor(50, 48); disp->printf("%2u:%2u:%2u.%2u", gps.time.hour(),gps.time.minute(),gps.time.second(),gps.time.centisecond());
         } else {
-            disp->setCursor(50, 60); disp->print("INVALID");
+            disp->setCursor(50, 48); disp->print("INVALID");
         }
-            
+        if (gps.satellites.isValid()) {
+            disp->setCursor(5, 60); disp->printf("Sats: %u", gps.satellites.value());
+        }
+        if (gps.hdop.isValid()) {
+            disp->setCursor(50, 60); disp->printf("HDOP: %4.1f", gps.hdop.value()/100.0);
+        }
+
+        if (gps.altitude.isValid()) {
+            disp->setCursor(U8G2_HOR_ALIGN_RIGHT(String(gps.altitude.meters()).c_str()) - 5, 12);
+            disp->setCursor(U8G2_HOR_ALIGN_RIGHT("m ") - 5, 24);
+        }        
         disp->sendBuffer();
     }
 }
@@ -211,9 +264,19 @@ void printInfo()
         Serial.print(F("."));
         if (gps.time.centisecond() < 10) Serial.print(F("0"));
         Serial.print(gps.time.centisecond());
+        Serial.println();
     } else {
-        Serial.print(F("INVALID"));
+        Serial.println("INVALID");
     }
+    Serial.println("Sats HDOP  Fix  Alt    Course Speed");
+    Serial.println("           Age  (m)    --- from GPS");
+    printInt(gps.satellites.value(), gps.satellites.isValid(), 5);
+    printFloat(gps.hdop.hdop(), gps.hdop.isValid(), 6, 1);
+    printInt(gps.location.age(), gps.location.isValid(), 5);
+    printFloat(gps.altitude.meters(), gps.altitude.isValid(), 7, 2);
+    printFloat(gps.course.deg(), gps.course.isValid(), 7, 2);
+    printFloat(gps.speed.kmph(), gps.speed.isValid(), 6, 2);
+    Serial.println("-----------------------------------");
 
     Serial.println();
 }
@@ -238,6 +301,7 @@ void setup()
 
     Serial.println("TinyGPS_Example");
     Serial.println("A simple demonstration of TinyGPS++ with an attached GPS module");
+    Serial.println("An extensive example of many interesting TinyGPS++ features");
     Serial.printf("Testing TinyGPS++ library v. %s by Mikal Hart\n\n", TinyGPSPlus::libraryVersion());
 
     #ifdef HAS_GPS
@@ -276,7 +340,7 @@ void loop()
             displayInfo();
             printInfo();
         }
-
+    
     if (millis() > 15000 && gps.charsProcessed() < 10) {
         Serial.println(F("No GPS detected: check wiring."));
         delay(15000);
