@@ -107,6 +107,9 @@ adc_unit_t unit = ADC_UNIT_2;
 adc_atten_t atten = ADC_ATTEN_DB_0;
 //static const
 adc_unit_t unit = ADC_UNIT_1;
+#elif defined(BOARD_TBEAM_1W)
+adc_atten_t atten = ADC_ATTEN_DB_2_5;
+adc_unit_t unit = ADC_UNIT_1;
 #else
 //static const
 adc_atten_t atten = ADC_ATTEN_DB_0;
@@ -230,10 +233,14 @@ void init_batt(void)
 
 	analogReadResolution(12); // Can be 8, 10, 12 or 14
 
-#elif defined(BOARD_E22_S3) || defined(BOARD_TBEAM_1W)
+#elif defined(BOARD_E22_S3)
 	analogSetAttenuation(ADC_0db);
 	analogReadResolution(12);
 
+#elif defined(BOARD_TBEAM_1W)
+	analogSetAttenuation(ADC_2_5db);
+	analogReadResolution(12);
+	
 #elif defined(BOARD_TRACKER)
 
 #elif defined(BOARD_T_DECK) || defined(BOARD_T_DECK_PLUS)
@@ -374,11 +381,11 @@ float read_batt(void)
 
 		raw = floatVoltage * 1000.0;
 
-		#elif defined(BOARD_E22_S3)
+		#elif defined(BOARD_E22_S3) || defined(BOARD_TBEAM_1W)
 
 		uint16_t analogValue = analogReadMilliVolts(BATTERY_PIN);
 
-		raw = (float)analogValue * fBattFaktor;
+		raw = (float)analogValue * fBattFaktor  + BAT_VOL_COMPENSATION;
 
 		if(bDisplayCont)
 		{
@@ -419,7 +426,7 @@ float read_batt(void)
 		raw = raw * 24.80;
 	#elif defined(BOARD_HELTEC_V3) || defined(BOARD_STICK_V3) || defined(BOARD_TRACKER)
 		// all done
-	#elif defined(BOARD_E22_S3)
+	#elif defined(BOARD_E22_S3) || defined(BOARD_TBEAM_1W)
 		// all done
 	#elif defined(BOARD_TLORA_OLV216)
 		raw = raw * 1000.0; // convert to volt
@@ -433,8 +440,7 @@ float read_batt(void)
 
 	if(bDisplayCont)
 	{
-		Serial.print("[readBatteryVoltage] raw mV : ");
-		Serial.println(raw);
+		Serial.printf("[readBatteryVoltage] raw %.2f mV\n", raw);
 	}
 
 	is_receiving = false;

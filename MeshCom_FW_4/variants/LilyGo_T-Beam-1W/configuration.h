@@ -1,19 +1,18 @@
 #pragma once
 /*
-definitions for LilyGo T-BEAM 1W Board
+definitions for LilyGo T-BEAM 1W Board OE3WAS
 */
 
 #include <Arduino.h>
 #include <configuration_global.h>
 
-//original LilyGo T-Beam-1W mit MesCom definitions tw. andere Namen
+//original LilyGo T-Beam-1W mit MesCom definitions ergänzt und tw. andere Namen
 
 #define UNUSED_PIN                   (0)
 
 #define BOARD_VARIANT_NAME          "LoRa 1W"
 #define MODUL_HARDWARE T_BEAM_1W
-
-//#define SX126x_V3
+#define RADIO_TYPE_STR  "SX1262"
 #ifndef USING_SX1262
 #define USING_SX1262
 #endif
@@ -65,15 +64,17 @@ definitions for LilyGo T-BEAM 1W Board
 #define FAN_CTRL                    (41)
 
 //#define ANALOG_PIN 1
-#define ADC_PIN                     (4)
 #define ANALOG_REFRESH_INTERVAL 30 // sec messure intervall
-
-//#define BATTERY_PIN 2 // A battery voltage measurement pin, voltage divider connected here to measure battery voltage
 //#define ADC_MULTIPLIER 5.7    // default and can be overwritten with Flash variable node_analog_batt_faktor Spannungsteiler 47k+10k
+
+#define ADC_PIN                     4
+#define BATTERY_PIN ADC_PIN // A battery voltage measurement pin, voltage divider connected here to measure battery voltage
 #define BAT_ADC_PULLUP_RES          (300000.0)
 #define BAT_ADC_PULLDOWN_RES        (150000.0)
 #define BAT_MAX_VOLTAGE             (7.4)
 #define BAT_VOL_COMPENSATION        (0.25)
+#define S3_VREF                     (1.1)  // 1.0 - 1.2 V
+#define ADC_MULTIPLIER (BAT_ADC_PULLUP_RES+BAT_ADC_PULLDOWN_RES)/BAT_ADC_PULLDOWN_RES
 
 #define GPS_SLEEP_HOLD_ON_LOW
 #define GPS_BAUD_RATE               9600
@@ -92,8 +93,6 @@ definitions for LilyGo T-BEAM 1W Board
 
 #define __HAS_SPI1__
 
-#define BOARD_VARIANT_NAME          "LoRa 1W"
-#define RADIO_TYPE_STR  "SX1262"
 // end original LilyGo T-Beam-1W
 
 

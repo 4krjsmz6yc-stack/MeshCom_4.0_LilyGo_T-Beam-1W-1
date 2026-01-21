@@ -14,6 +14,10 @@
 #include "esp32_gps.h"
 #include "esp32_flash.h"
 
+//====== Timer for periodical events u.a.
+#include "Timeout.h"
+Timeout timerSerial;
+
 #ifdef HAS_SDCARD
 #include <SD.h>
 #endif
@@ -686,7 +690,7 @@ void esp32setup()
     meshcom_settings.max_hop_text = MAX_HOP_TEXT_DEFAULT;
     meshcom_settings.max_hop_pos = MAX_HOP_POS_DEFAULT;
 
-    #if defined(BOARD_E22_S3)
+    #if defined(BOARD_E22_S3) || defined(BOARD_TBEAM_1W)
         fBattFaktor = ADC_MULTIPLIER;   // default
         if(meshcom_settings.node_analog_batt_faktor > 0.0)
             fBattFaktor = meshcom_settings.node_analog_batt_faktor;
@@ -1566,7 +1570,7 @@ void esp32loop()
                 bEnableInterruptReceive = false; //KBC 0801
                 radio.clearPacketReceivedAction(); // KBC 0801
 
-                // clear Transmit Interrupt
+                
                 bEnableInterruptTransmit = false; // KBC 0801
                 radio.clearPacketSentAction();  //KBC 0801
 
@@ -2372,7 +2376,7 @@ void esp32loop()
                 if(bDisplayCont)
                 {
                     #if not defined (BOARD_T_DECK_PRO)
-                    Serial.printf("[readBatteryVoltage] %s ...volt %.1f proz %i max_batt %.3f\n", getTimeString().c_str(), global_batt/1000., global_proz, meshcom_settings.node_maxv);
+                    Serial.printf("[readBatteryVoltage] %s ... %.1f V %i%% max_batt %.3f V\n", getTimeString().c_str(), global_batt/1000., global_proz, meshcom_settings.node_maxv);
                     #endif
                 }
 
