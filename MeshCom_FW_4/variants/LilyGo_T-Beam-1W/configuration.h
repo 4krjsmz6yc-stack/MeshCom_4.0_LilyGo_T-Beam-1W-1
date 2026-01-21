@@ -63,18 +63,18 @@ definitions for LilyGo T-BEAM 1W Board OE3WAS
 #define NTC_PIN                     (14)
 #define FAN_CTRL                    (41)
 
-//#define ANALOG_PIN 1
-#define ANALOG_REFRESH_INTERVAL 30 // sec messure intervall
-//#define ADC_MULTIPLIER 5.7    // default and can be overwritten with Flash variable node_analog_batt_faktor Spannungsteiler 47k+10k
-
 #define ADC_PIN                     4
 #define BATTERY_PIN ADC_PIN // A battery voltage measurement pin, voltage divider connected here to measure battery voltage
-#define BAT_ADC_PULLUP_RES          (300000.0)
-#define BAT_ADC_PULLDOWN_RES        (150000.0)
-#define BAT_MAX_VOLTAGE             (7.4)
-#define BAT_VOL_COMPENSATION        (0.25)
+#define BAT_ADC_PULLUP_RES          300000.0
+#define BAT_ADC_PULLDOWN_RES        150000.0
+#define BAT_MAX_VOLTAGE             7.4
+#define BAT_VOL_COMPENSATION        0.25
 #define S3_VREF                     (1.1)  // 1.0 - 1.2 V
 #define ADC_MULTIPLIER (BAT_ADC_PULLUP_RES+BAT_ADC_PULLDOWN_RES)/BAT_ADC_PULLDOWN_RES
+
+#define ANALOG_PIN ADC_PIN  //testweise
+#define ANALOG_REFRESH_INTERVAL 30 // sec messure intervall
+//#define ADC_MULTIPLIER 5.7    // default and can be overwritten with Flash variable node_analog_batt_faktor Spannungsteiler 47k+10k
 
 #define GPS_SLEEP_HOLD_ON_LOW
 #define GPS_BAUD_RATE               9600

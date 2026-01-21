@@ -2376,7 +2376,7 @@ void esp32loop()
                 if(bDisplayCont)
                 {
                     #if not defined (BOARD_T_DECK_PRO)
-                    Serial.printf("[readBatteryVoltage] %s ... %.1f V %i%% max_batt %.3f V\n", getTimeString().c_str(), global_batt/1000., global_proz, meshcom_settings.node_maxv);
+                    Serial.printf("[readBatteryVoltage] %s ... %.2f V %i%% max_batt %.3f V\n", getTimeString().c_str(), global_batt/1000., global_proz, meshcom_settings.node_maxv);
                     #endif
                 }
 

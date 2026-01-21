@@ -32,23 +32,25 @@ uint16_t SampleCount = 0;
 /**
  * @brief ### [OE3WAS] Smoothing of ADC values version 1
  * @brief #### --analogset = Abfrage der Paramter
- * @brief #### --analog check {on|off} = Serielle Ausgabe ON/OFF
+ * @brief #### --analog check {on|off} = Serielle Ausgabe ON/OFF {"ACK"}
+ * @brief #### --analog filter {on|off} {"AFL"}
  * @attention - noch keine Verareitung ev. verfügbarem Vref (konnte noch nicht gelesen werden)
- * @param node_analog_pin ADC-GPIO               [--analog GPIO {0..99} (aber nur bestimmte GPIO gültig!)]
- * @param ADCatten {0..3} Abschwächer intern     [--analog atten {0|1|2|3}]
- * @param node_analog_faktor Kalibrierungsfaktor [--analog factor 99.999]
- * @param ADCslope 9.999 (1.0 default)           [--analog slope 9.999]
- * @param ADCoffset 999 [mV] (0.0 default)       [--analog offset 999 [mV]]
- * @param node_analog_alpha float xxxx.xxx       [--analog alpha 9999.999 (Kombinationswert für mehrere Parameter)]
- * @param ADCalpha     xxxx.999 [.001 .. .999] (=Filter-Koeffizient)
- * @param ADCintervall xx99.xxx [02 .. 99 ms]  (=Sampling Intervall)
- * @param ADCshowtime  99xx.xxx [01 .. 99 s]   (=Ausgabe Intervall)
+ * @param node_analog_pin ADC-GPIO               [--analog GPIO {0..99} (aber nur bestimmte GPIO gültig!)] {"APN"}
+ * @param ADCatten {0..3} Abschwächer intern     [--analog atten {0|1|2|3}] {"ADCAT"}
+ * @param node_analog_faktor Kalibrierungsfaktor [--analog factor 99.999] {"AFC"}
+ * @param ADCslope 9.999 (1.0 default)           [--analog slope 9.999] {"ADCSL"}
+ * @param ADCoffset 999 [mV] (0.0 default)       [--analog offset 999 [mV]] {"ADCOF"}
+ * @param node_analog_alpha float xxxx.xxx       [--analog alpha 9999.999 (Kombinationswert für mehrere Parameter)] {"AK"}
+ * @param = ADCalpha     xxxx.999 [.001 .. .999] (=Filter-Koeffizient)
+ * @param = ADCintervall xx99.xxx [02 .. 99 ms]  (=Sampling Intervall)
+ * @param = ADCshowtime  99xx.xxx [01 .. 99 s]   (=Ausgabe Intervall)
  * @return Die Ausgabe ist vorbereitet für .csv Weiterverarbeitung:
  * @return - [ADC1]; GPIOx; Time; SampleCount; ADCalpha; ADCraw; ADCexp1; ADCexp2
  * @return - ADCalpha = 0.001 .. 0.999 [0.10 default]
- * @return - ADCraw = 0..4095 12bit-Messwert ohne Umrechnung
- * @return - ADCexp1 = Messwert exponentielle Glättung 1. Ordnung
- * @return - ADCexp2 = Messwert exponentielle Glättung 2. Ordnung
+ * @return - fAnalogValue {"ADC"}
+ * @return - ADCraw = 0..4095 12bit-Messwert ohne Umrechnung {"ADCRAW"}
+ * @return - ADCexp1 = Messwert exponentielle Glättung 1. Ordnung {"ADCE1"}
+ * @return - ADCexp2 = Messwert exponentielle Glättung 2. Ordnung {"ADCE2"}
 **/
 void loop_ADCFunctions()
 {    
