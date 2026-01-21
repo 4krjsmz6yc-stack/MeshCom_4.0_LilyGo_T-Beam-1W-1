@@ -1,0 +1,266 @@
+/*
+   RadioLib Transmit with Interrupts Example
+
+   This example transmits packets using SX1276/SX1278/SX1262/SX1268/SX1280/LR1121 LoRa radio module.
+   Each packet contains up to 256 bytes of data, in the form of:
+    - Arduino String
+    - null-terminated char array (C-string)
+    - arbitrary binary data (byte array)
+
+   For full API reference, see the GitHub Pages
+   https://jgromes.github.io/RadioLib/
+*/
+
+#include <Arduino.h>
+#include <SPI.h>
+#include <Wire.h>
+#include <esp_mac.h>
+#include "soc/rtc.h"
+
+#if defined(ARDUINO_ARCH_ESP32)
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5,0,0)
+#include "hal/gpio_hal.h"
+#endif
+#include "driver/gpio.h"
+#endif //ARDUINO_ARCH_ESP32
+
+#include <U8g2lib.h>
+#include <RadioLib.h>
+
+#include "configuration.h"
+
+
+#if defined(USING_SX1262)
+
+    #ifndef CONFIG_RADIO_OUTPUT_POWER
+    #define CONFIG_RADIO_OUTPUT_POWER   2
+    #endif
+
+    SX1262 radio = new Module(RADIO_CS_PIN, RADIO_DIO1_PIN, RADIO_RST_PIN, RADIO_BUSY_PIN);
+
+#endif // Radio define end
+
+
+// save transmission state between loops
+static int transmissionState = RADIOLIB_ERR_NONE;
+// flag to indicate that a packet was sent
+static volatile bool transmittedFlag = false;
+static uint32_t counter = 0;
+static String payload;
+
+// this function is called when a complete packet
+// is transmitted by the module
+// IMPORTANT: this function MUST be 'void' type
+//            and MUST NOT have any arguments!
+void setFlag(void) { transmittedFlag = true; } // we sent a packet, set the flag
+
+uint8_t  display_address = 0x3c;    // It might be 0x3D
+
+U8G2 *disp = NULL;
+#define U8G2_HOR_ALIGN_CENTER(t)    ((disp->getDisplayWidth() -  (disp->getUTF8Width(t))) / 2)
+#define U8G2_HOR_ALIGN_RIGHT(t)     ( disp->getDisplayWidth()  -  disp->getUTF8Width(t))
+
+//=======================================================================================
+bool beginDisplay()
+{
+    Wire.beginTransmission(display_address);
+    if (Wire.endTransmission() == 0) {
+        disp = new DISPLAY_MODEL(U8G2_R0, U8X8_PIN_NONE);
+        Serial.printf("Find Display model at 0x%X address\n", display_address);
+        disp->begin();
+        disp->clearBuffer();
+        disp->setFont(u8g2_font_inb19_mr);
+        disp->drawStr(0, 30, "LilyGo");
+        disp->drawHLine(2, 35, 47);
+        disp->drawHLine(3, 36, 47);
+        disp->drawVLine(45, 32, 12);
+        disp->drawVLine(46, 33, 12);
+        disp->setFont(u8g2_font_inb19_mf);
+        disp->drawStr(58, 60, "LoRa");
+        disp->sendBuffer();
+        disp->setFont(u8g2_font_fur11_tf);
+        delay(3000);
+        return true;
+    }
+    Serial.printf("Warning: Failed to find Display at 0x%0X address\n", display_address);
+    return false;
+}
+
+//=======================================================================================
+void drawMain()
+{
+    if (disp) {
+        disp->clearBuffer();
+        disp->drawRFrame(0, 0, 128, 64, 5);
+        disp->setFont(u8g2_font_pxplusibmvga8_mr);
+        disp->setCursor(5, 20);   disp->print("TX:");
+        disp->setCursor(5, 35);   disp->print("STATE:");
+        disp->setCursor(5, 50);   disp->print("RSSI:");
+
+        disp->setFont(u8g2_font_crox1h_tr);
+        disp->setCursor( U8G2_HOR_ALIGN_RIGHT(payload.c_str()) - 5, 20 );
+        disp->print(payload);
+
+        String state = transmissionState == RADIOLIB_ERR_NONE ? "NONE" : String(transmissionState);
+        disp->setCursor( U8G2_HOR_ALIGN_RIGHT(state.c_str()) -  21, 40 );
+        disp->print(state);
+        disp->sendBuffer();
+    }
+}
+
+
+//=======================================================================================
+void setup()
+{
+    Serial.begin(115200);
+    while (!Serial);
+    for (int i=0;i<10;i++) {
+        Serial.println(".");
+        delay(1000);
+    }
+    Serial.println("\nSetup Board");
+
+    // initialize radio with default settings
+    int state = radio.begin();
+
+    //radio.setTCXO(3.0);
+
+    Serial.printf("[%s]:", RADIO_TYPE_STR);
+    Serial.print("Radio Initializing ... ");
+    if (state == RADIOLIB_ERR_NONE) {
+        Serial.println("success!");
+    } else {
+        Serial.printf("failed, code %u >>>>>> stopped", state);
+        while (true);
+    }
+
+    // set the function that will be called when packet transmission is finished
+    radio.setPacketSentAction(setFlag);
+
+    // Sets carrier frequency.
+    // SX1268/SX1262 : Allowed values are in range from 150.0 to 960.0 MHz
+    if (radio.setFrequency(CONFIG_RADIO_FREQ) == RADIOLIB_ERR_INVALID_FREQUENCY) {
+        Serial.println(F("Selected frequency is invalid for this module! >>>>> stopped"));
+        while (true);
+    }
+
+    // Sets LoRa link bandwidth.
+    // SX1268/SX1262 : Allowed values are 7.8, 10.4, 15.6, 20.8, 31.25, 41.7, 62.5, 125.0, 250.0 and 500.0 kHz
+    if (radio.setBandwidth(CONFIG_RADIO_BW) == RADIOLIB_ERR_INVALID_BANDWIDTH) {
+        Serial.println(F("Selected bandwidth is invalid for this module! >>>>> stopped"));
+        while (true);
+    }
+
+    // SX1262 :  LoRa link spreading factor allowed values range from 5 to 12
+    if (radio.setSpreadingFactor(12) == RADIOLIB_ERR_INVALID_SPREADING_FACTOR) {
+        Serial.println(F("Selected spreading factor is invalid for this module! >>>>> stopped"));
+        while (true);
+    }
+
+    // Sets LoRa coding rate denominator.
+    // SX1278/SX1276/SX1268/SX1262 : Allowed values range from 5 to 8. Only available in LoRa mode
+    if (radio.setCodingRate(6) == RADIOLIB_ERR_INVALID_CODING_RATE) {
+        Serial.println(F("Selected coding rate is invalid for this module! >>>>> stopped"));
+        while (true);
+    }
+
+    // Sets LoRa sync word.
+    // SX1278/SX1276/SX1268/SX1262/SX1280 : Sets LoRa sync word. Only available in LoRa mode
+    if (radio.setSyncWord(0xAB) != RADIOLIB_ERR_NONE) {
+        Serial.println(F("Unable to set sync word! >>>>> stopped"));
+        while (true);
+    }
+
+    // Sets transmission output power.
+    // SX1262 :  Allowed values are in range from -9 to 22 dBm.
+    // This method is virtual to allow override from the SX1261 class
+    if (radio.setOutputPower(CONFIG_RADIO_OUTPUT_POWER) == RADIOLIB_ERR_INVALID_OUTPUT_POWER) {
+        Serial.println(F("Selected output power is invalid for this module! >>>>> stopped"));
+        while (true);
+    }
+
+    // Sets current limit for over current protection at transmitter amplifier.
+    // SX1262/SX1268 : Allowed values range from 45 to 120 mA in 2.5 mA steps and 120 to 240 mA in 10 mA steps
+    // NOTE: set value to 0 to disable overcurrent protection
+    if (radio.setCurrentLimit(140) == RADIOLIB_ERR_INVALID_CURRENT_LIMIT) {
+        Serial.println(F("Selected current limit is invalid for this module! >>>>> stopped"));
+        while (true);
+    }
+
+    // Sets preamble length for LoRa or FSK modem.
+    // SX1262/SX1268 : Allowed values range from 1 to 65535.
+    if (radio.setPreambleLength(16) == RADIOLIB_ERR_INVALID_PREAMBLE_LENGTH) {
+        Serial.println(F("Selected preamble length is invalid for this module! >>>>> stopped"));
+        while (true);
+    }
+
+    // Enables or disables CRC check of received packets.
+    if (radio.setCRC(false) == RADIOLIB_ERR_INVALID_CRC_CONFIGURATION) {
+        Serial.println(F("Selected CRC is invalid for this module! >>>>> stopped"));
+        while (true);
+    }
+
+
+#ifdef USING_SX1262
+    // Some SX126x modules use DIO2 as RF switch. To enable this feature, the following method can be used.
+    // NOTE: As long as DIO2 is configured to control RF switch, it can't be used as interrupt pin!
+    if (radio.setDio2AsRfSwitch() != RADIOLIB_ERR_NONE) {
+        Serial.println(F("Failed to set DIO2 as RF switch! >>>>> stopped"));
+        while (true);
+    }
+#endif //USING_SX1262
+
+
+#ifdef RADIO_CTRL
+    Serial.println("Turn off LNA, Turn on PA, Enter Tx mode.");
+    digitalWrite(RADIO_CTRL, LOW);
+#endif /*RADIO_CTRL*/
+
+
+    // start transmitting the first packet
+    Serial.print(F("Radio Sending first packet ... "));
+
+    // you can transmit C-string or Arduino string up to 256 characters long
+    transmissionState = radio.startTransmit(String(counter).c_str());
+
+    // you can also transmit byte array up to 256 bytes long
+    /*
+      byte byteArr[] = {0x01, 0x23, 0x45, 0x67,
+                        0x89, 0xAB, 0xCD, 0xEF};
+      state = radio.startTransmit(byteArr, 8);
+    */
+    delay(1000);
+
+    drawMain();
+}
+
+void loop()
+{
+    if (transmittedFlag) {    // check if the previous transmission finished
+        transmittedFlag = false;  // reset flag
+
+        payload = "#" + String(counter++);
+
+        if (transmissionState == RADIOLIB_ERR_NONE) {
+            Serial.println("transmission finished!");  // packet was successfully sent
+            // NOTE: when using interrupt-driven transmit method,
+            // it is not possible to automatically measure transmission data rate using getDataRate()
+        } else {
+            Serial.print("failed, code ");
+            Serial.println(transmissionState);
+        }
+
+        drawMain();
+        delay(2000);  // wait a second before transmitting again
+
+        Serial.print(F("Radio Sending another packet ... "));
+        // you can transmit C-string or Arduino string up to 256 characters long
+        transmissionState = radio.startTransmit(payload);
+        // you can also transmit byte array up to 256 bytes long
+        /*
+          byte byteArr[] = {0x01, 0x23, 0x45, 0x67,
+                            0x89, 0xAB, 0xCD, 0xEF};
+          int state = radio.startTransmit(byteArr, 8);
+        */
+    }
+}
