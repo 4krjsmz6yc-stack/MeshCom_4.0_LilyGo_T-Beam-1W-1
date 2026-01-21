@@ -15,8 +15,8 @@
 - [x] **LoRa**: SX1262 RX
 - [≈] **BATT** [**FW 4.35l.01.21.a**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/releases/tag/4.35l.01.21.a)
 - [≈] **GPS**: L76K [TinyGPS-Example](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/exam2/TinyGPS_Example/firmware) (LAT,LON,ALT,Sats,HDOP,Date, TimeUTC)
-- [ ] **LoRa**: SX1262 TX
 - [≈] **OTA** noch ausführlich testen
+- [ ] **LoRa**: SX1262 TX
 - [ ] tools/**download_meshcom.py** u.a. noch anpassen
 - [ ] Freigabe von **Sensoren**
 - [ ] **MQTT** (siehe auch https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/discussions/7)
