@@ -27,7 +27,6 @@
 - [x] **SD-Card Example** `SD_Test` getestet mit **T3_V1.6.1** & **LilyGo T-Beam-1W**
 - [x] **LoRa Example** `RadioLib_Receive_Interrupt` getestet mit **T3_V1.6.1** & **LilyGo T-Beam-1W**
 - [-] **LoRa Example** `RadioLib_Transmit_Interrupt`
-- [~] **GPS Examples** L76K wird richtig erkannt am   **LilyGo T-Beam-1W**
 
 ---
 ### Implementierung [⬆️](#lilygo-t-beam-1w)
