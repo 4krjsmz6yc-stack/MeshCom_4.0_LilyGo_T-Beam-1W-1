@@ -91,7 +91,6 @@ adc_bits_width_t width = ADC_WIDTH_BIT_13;
 adc_channel_t channel = ADC_CHANNEL_6;
 //static const
 adc_bits_width_t width = ADC_WIDTH_BIT_12;
-
 #endif
 
 #endif

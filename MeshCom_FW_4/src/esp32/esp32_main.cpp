@@ -346,7 +346,7 @@ LLCC68 radio = new Module(LORA_CS, LORA_DIO0, LORA_RST, LORA_DIO1);
     SX1262 radio = new Module(SX1262X_CS, SX1262X_IRQ, SX1262X_RST, SX1262X_GPIO);
 #endif
 
-#ifdef USING_SX1262 // T_BEAM_1W
+#ifdef USING_SX1262 // BOARD_TBEAM_1W
     // !!!!! es wird nur ein SX1261 erkannt !!!!!
     SX1262 radio = new Module(RADIO_CS_PIN, RADIO_DIO1_PIN, RADIO_RST_PIN, RADIO_BUSY_PIN);    
 #endif
@@ -486,8 +486,12 @@ void esp32setup()
         delay(500);
         isc--;
     }
-    for (int i=0;i<10;i++) { //Zeit geben, um Terminal einzuschalten bei nativer USB
-        Serial.println("."); delay(1000); }
+    ///< delay for ESP32-S3 nativ USB [OE3WAS]
+    ///< um Terminal verbinden zu können
+    timerSerial.start(2000);  //timeout falls keine USB verbunden ist
+    Serial.begin(115200);
+    while (!Serial && !timerSerial.time_over());
+    if (Serial) { for (int i=0;i<10;i++) { Serial.println("."); delay(1000); } }
 
     #if defined BOARD_T5_EPAPER
         if (psramInit()) {
@@ -536,7 +540,6 @@ void esp32setup()
 
     #endif
     //======================================================
-    delay(5000);  ///< delay for ESP32-S3 nativ USB [OE3WAS]
 
     Serial.println("");
     Serial.println("");
@@ -1647,7 +1650,7 @@ void esp32loop()
                 // clean up after transmission is finished
                 // this will ensure transmitter is disabled,
                 // RF switch is powered down etc.
-                //radio.finishTransmit(); // vorerst disable T-BEAM-1W
+                radio.finishTransmit();
 
                 #ifndef BOARD_TLORA_OLV216
                 // reset MeshCom now
