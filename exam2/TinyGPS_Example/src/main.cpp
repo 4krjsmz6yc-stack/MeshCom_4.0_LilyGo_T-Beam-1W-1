@@ -28,7 +28,6 @@ Timeout timerSerial;
 
 #ifdef DISPLAY_MODEL
     uint8_t  display_address = 0x3c;    // It might be 0x3D
-    //U8G2 *disp = NULL;
     DISPLAY_MODEL *disp = NULL;
     #define U8G2_HOR_ALIGN_CENTER(t)    ((disp->getDisplayWidth() -  (disp->getUTF8Width(t))) / 2)
     #define U8G2_HOR_ALIGN_RIGHT(t)     ( disp->getDisplayWidth()  -  disp->getUTF8Width(t))
