@@ -114,9 +114,51 @@ void setup()
     Serial.begin(115200);
     while (!Serial && !timerSerial.time_over());
     if (Serial) { for (int i=0;i<10;i++) { Serial.println("."); delay(1000); } }
+
+    #ifdef I2C_SDA
+        Wire.begin(I2C_SDA, I2C_SCL);
+    #endif
+
     Serial.println("\nSetup Board");
+    
+    beginDisplay();
+
+    SPI.begin(RADIO_SCLK_PIN, RADIO_MISO_PIN, RADIO_MOSI_PIN);
+
+    #if defined(HAS_SDCARD) && defined(SD_SHARE_SPI_BUS)
+        // Share spi bus with lora , set lora cs,rst to high
+        pinMode(RADIO_CS_PIN, OUTPUT);
+        pinMode(RADIO_RST_PIN, OUTPUT);
+        digitalWrite(RADIO_CS_PIN, HIGH);
+        digitalWrite(RADIO_RST_PIN, HIGH);
+    #endif
+
+    #ifdef RADIO_LDO_EN
+        // T-BEAM-1W Control SX1262, LNA, must set RADIO_LDO_EN to HIGH to power the Radio
+        pinMode(RADIO_LDO_EN, OUTPUT);
+        digitalWrite(RADIO_LDO_EN, HIGH);
+        delay(200);
+    #endif
+
+    #ifdef RADIO_CTRL
+        // T-BEAM-1W LoRa RX/TX Control. RADIO_CTRL controls the LNA, not the PA.
+        // Only when RX DATA is on, set to 1 to turn on LNA.
+        // When TX DATA is on, RADIO_CTRL is set to 0 and LNA is turned off.
+        pinMode(RADIO_CTRL, OUTPUT);
+        digitalWrite(RADIO_CTRL, HIGH);  // RX Mode
+        delay(200);
+    #endif
 
     int state = radio.begin();    // initialize radio with default settings
+
+    #ifdef USING_SX1262
+    // Some SX126x modules use DIO2 as RF switch. To enable this feature, the following method can be used.
+    // NOTE: As long as DIO2 is configured to control RF switch, it can't be used as interrupt pin!
+    if (radio.setDio2AsRfSwitch() != RADIOLIB_ERR_NONE) {
+        Serial.println("Failed to set DIO2 as RF switch! >>>>> stopped");
+        while (true);
+    }
+    #endif //USING_SX1262
 
     //radio.setTCXO(3.0);
 
@@ -195,14 +237,6 @@ void setup()
         while (true);
     }
 
-#ifdef USING_SX1262
-    // Some SX126x modules use DIO2 as RF switch. To enable this feature, the following method can be used.
-    // NOTE: As long as DIO2 is configured to control RF switch, it can't be used as interrupt pin!
-    if (radio.setDio2AsRfSwitch() != RADIOLIB_ERR_NONE) {
-        Serial.println("Failed to set DIO2 as RF switch! >>>>> stopped");
-        while (true);
-    }
-#endif //USING_SX1262
 
 #ifdef RADIO_CTRL
     Serial.println("Turn off LNA, Turn on PA, Enter Tx mode.");
