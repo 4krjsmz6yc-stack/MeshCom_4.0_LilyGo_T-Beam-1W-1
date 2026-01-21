@@ -26,7 +26,7 @@
 - [x] **OLED Example** `OLED_SH1106_Test` getestet mit **T3_V1.6.1** & **LilyGo T-Beam-1W**
 - [x] **SD-Card Example** `SD_Test` getestet mit **T3_V1.6.1** & **LilyGo T-Beam-1W**
 - [x] **LoRa Example** `RadioLib_Receive_Interrupt` getestet mit **T3_V1.6.1** & **LilyGo T-Beam-1W**
-- [-] **LoRa Example** `RadioLib_Transmit_Interrupt`
+- [ ] **LoRa Example** `RadioLib_Transmit_Interrupt`
 
 ---
 ### Implementierung [⬆️](#lilygo-t-beam-1w)
