@@ -4,6 +4,8 @@
 #include <loop_functions.h>
 #include <loop_functions_extern.h>
 
+#include <esp_adc_cal.h>
+
 float global_batt = 0;
 int global_proz = 0;
 
@@ -238,7 +240,7 @@ void init_batt(void)
 	analogReadResolution(12);
 
 #elif defined(BOARD_TBEAM_1W)
-	analogSetAttenuation(ADC_2_5db);
+	analogSetAttenuation(ADC_11db); // bis ≈2,2V
 	analogReadResolution(12);
 	
 #elif defined(BOARD_TRACKER)

@@ -13,6 +13,7 @@
 
 #include "esp32_gps.h"
 #include "esp32_flash.h"
+#include <esp_adc_cal.h>
 
 //====== Timer for periodical events u.a.
 #include "Timeout.h"
@@ -494,15 +495,16 @@ float getTempForNTC()
 #ifdef NTC_PIN
     static uint32_t check_temperature = 0;
     if (millis() > check_temperature) {
-        float voltage = analogReadMilliVolts(NTC_PIN) / 1000.0;
-        float resistance = SERIES_RESISTOR * ((3.3 / voltage) - 1); // Calculate the resistance of NTC
+        analogSetAttenuation(ADC_11db); // bis <2,2V
+        float voltage = analogReadMilliVolts(NTC_PIN);
+        uint16_t raw = analogReadRaw(NTC_PIN);
+        // die fixen 3.3 V stimmen nicht, hier sollte diese Spannung auch gemessen werden (Jumper)
+        float resistance = SERIES_RESISTOR * ((3.3 / voltage *1000.0) - 1); // Calculate the resistance of NTC
 
         // Calculate temperature using the Steinhart-Hart equation
         temperature = (1.0 / (log(resistance / ROOM_TEMP_RESISTANCE) / B_COEFFICIENT + 1.0 / ROOM_TEMP)) - 273.15;
 
-        // Serial.print("Temperature: ");
-        // Serial.print(temperature);
-        // Serial.println(" °C");
+        Serial.printf("NTC-Temp: %.3f_°C %u_raw %.3f_mV %.2f_Ohm\n", temperature, raw, voltage, resistance);
 
         check_temperature  = millis() + 1000;
     }
@@ -2426,12 +2428,13 @@ void esp32loop()
                 Serial.printf("%s;[PSRM];%d\n", getTimeString().c_str(), ESP.getFreePsram());
             }
 
+            // [OE3WAS] Lüftersteuerung
             #if defined(NTC_PIN) && defined(FAN_CTRL) // BOARD_TBEAM_1W
             float NTCtemp = getTempForNTC();
-            if (NTCtemp > 40.0) { digitalWrite(FAN_CTRL, HIGH); 
-            } else if (NTCtemp < 25.0) { digitalWrite(FAN_CTRL, LOW); }
+            if (NTCtemp > 35.0) { digitalWrite(FAN_CTRL, HIGH); 
+            } else if (NTCtemp < 28.0) { digitalWrite(FAN_CTRL, LOW); }
 
-            Serial.printf("%s;[TEMP];%.1f;%s\n", getTimeString().c_str(), NTCtemp, digitalRead(FAN_CTRL) ? "on" : "off");
+            Serial.printf("%s;[TEMP];%.2f;%s\n", getTimeString().c_str(), NTCtemp, digitalRead(FAN_CTRL) ? "on" : "off");
             #endif
 
             BattTimeWait = millis();
