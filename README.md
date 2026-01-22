@@ -26,7 +26,7 @@
 - [x] **OLED Example** `OLED_SH1106_Test` getestet mit **T3_V1.6.1** & **LilyGo T-Beam-1W**
 - [x] **SD-Card Example** `SD_Test` getestet mit **T3_V1.6.1** & **LilyGo T-Beam-1W**
 - [x] **LoRa Example** `RadioLib_Receive_Interrupt` getestet mit **T3_V1.6.1** & **LilyGo T-Beam-1W**
-- [ ] **LoRa Example** `RadioLib_Transmit_Interrupt`
+- [x] **LoRa Example** `RadioLib_Transmit_Interrupt` getestet mit **T3_V1.6.1** & **LilyGo T-Beam-1W**
 
 ---
 ### Implementierung [⬆️](#lilygo-t-beam-1w)
@@ -174,5 +174,5 @@ https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series/blob/master/docs/en/t_beam_
 * Ich weise auf die gesetzlichen Bestimmungen bez. Elektrogeräten, Funkanlagen u.ä. hin, die von jedem Anwender selber einzuhalten sind.
 
 ---
-***:copyright: 17.1.2026 by OE3WAS - Wolfgang***
+***:copyright: 22.1.2026 by OE3WAS - Wolfgang***
 
