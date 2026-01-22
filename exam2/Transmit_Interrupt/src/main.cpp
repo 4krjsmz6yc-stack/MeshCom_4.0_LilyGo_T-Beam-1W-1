@@ -51,11 +51,9 @@ static String payload;
 
 // this function is called when a complete packet is transmitted by the module
 // IMPORTANT: this function MUST be 'void' type and MUST NOT have any arguments!
-/*
 #if defined(ESP8266) || defined(ESP32)
 ICACHE_RAM_ATTR
 #endif
-*/
 void setFlag(void) { transmittedFlag = true; } // we sent a packet, set the flag
 
 //=======================================================================================
@@ -98,14 +96,13 @@ void drawMain()
         disp->setFont(u8g2_font_pxplusibmvga8_mr);
         disp->setCursor(5, 20);   disp->print("TX:");
         disp->setCursor(5, 35);   disp->print("STATE:");
-        disp->setCursor(5, 50);   disp->print("RSSI:");
 
         disp->setFont(u8g2_font_crox1h_tr);
         disp->setCursor( U8G2_HOR_ALIGN_RIGHT(payload.c_str()) - 5, 20 );
         disp->print(payload);
 
-        String state = transmissionState == RADIOLIB_ERR_NONE ? "NONE" : String(transmissionState);
-        disp->setCursor( U8G2_HOR_ALIGN_RIGHT(state.c_str()) -  21, 40 );
+        String state = transmissionState == RADIOLIB_ERR_NONE ? "OK" : String(transmissionState);
+        disp->setCursor( U8G2_HOR_ALIGN_RIGHT(state.c_str()) -  21, 35 );
         disp->print(state);
         disp->sendBuffer();
     }
@@ -158,15 +155,6 @@ void setup()
     int state = radio.begin(CONFIG_RADIO_FREQ);    // initialize radio with default settings
     Serial.printf("... radio state: %u", state);
 
-    #ifdef USING_SX1262
-    // Some SX126x modules use DIO2 as RF switch. To enable this feature, the following method can be used.
-    // NOTE: As long as DIO2 is configured to control RF switch, it can't be used as interrupt pin!
-    if (radio.setDio2AsRfSwitch() != RADIOLIB_ERR_NONE) {
-        Serial.println("Failed to set DIO2 as RF switch! >>>>> stopped");
-        while (true);
-    }
-    #endif //USING_SX1262
-
     //radio.setTCXO(3.0);
 
     Serial.printf("[%s]:", RADIO_TYPE_STR);
@@ -196,21 +184,21 @@ void setup()
     }
 
     // SX1262 :  LoRa link spreading factor allowed values range from 5 to 12
-    if (radio.setSpreadingFactor(12) == RADIOLIB_ERR_INVALID_SPREADING_FACTOR) {
+    if (radio.setSpreadingFactor(CONFIG_RADIO_SF) == RADIOLIB_ERR_INVALID_SPREADING_FACTOR) {
         Serial.println("Selected spreading factor is invalid for this module! >>>>> stopped");
         while (true);
     }
 
     // Sets LoRa coding rate denominator.
     // SX1278/SX1276/SX1268/SX1262 : Allowed values range from 5 to 8. Only available in LoRa mode
-    if (radio.setCodingRate(6) == RADIOLIB_ERR_INVALID_CODING_RATE) {
+    if (radio.setCodingRate(CONFIG_RADIO_CR) == RADIOLIB_ERR_INVALID_CODING_RATE) {
         Serial.println("Selected coding rate is invalid for this module! >>>>> stopped");
         while (true);
     }
 
     // Sets LoRa sync word.
     // SX1278/SX1276/SX1268/SX1262/SX1280 : Sets LoRa sync word. Only available in LoRa mode
-    if (radio.setSyncWord(0xAB) != RADIOLIB_ERR_NONE) {
+    if (radio.setSyncWord(CONFIG_RADIO_SW) != RADIOLIB_ERR_NONE) {
         Serial.println("Unable to set sync word! >>>>> stopped");
         while (true);
     }
@@ -270,7 +258,7 @@ void loop()
     if (transmittedFlag) {    // check if the previous transmission finished
         transmittedFlag = false;  // reset flag
 
-        payload = "#" + String(counter++);
+        payload = "TB-1W #" + String(counter++);
 
         if (transmissionState == RADIOLIB_ERR_NONE) {
             Serial.println("transmission finished!");  // packet was successfully sent
@@ -286,7 +274,7 @@ void loop()
 
         drawMain();
 
-        delay(2000);  // wait a second before transmitting again
+        delay(5000);  // wait a second before transmitting again
 
         Serial.print("Radio Sending another packet ... ");
         // you can transmit C-string or Arduino string up to 256 characters long
