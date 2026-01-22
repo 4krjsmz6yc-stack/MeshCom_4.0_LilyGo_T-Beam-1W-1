@@ -45,7 +45,7 @@ Timeout timerSerial;
 
 #if     defined(USING_SX1276)
     #ifndef CONFIG_RADIO_OUTPUT_POWER
-    #define CONFIG_RADIO_OUTPUT_POWER   2
+    #define CONFIG_RADIO_OUTPUT_POWER   10
     #endif
     SX1276 radio = new Module(RADIO_CS_PIN, RADIO_DIO0_PIN, RADIO_RST_PIN, RADIO_DIO1_PIN);
 #endif
@@ -161,7 +161,7 @@ void setup()
 
     Serial.println("... radio.begin ...");
     int state = radio.begin(CONFIG_RADIO_FREQ);    // initialize radio with default settings
-    Serial.printf("... radio state: %u", state);
+    Serial.printf("... radio state: %u\n", state);
 
     //radio.setTCXO(3.0);
 
@@ -229,7 +229,7 @@ void setup()
 
     // Sets preamble length for LoRa or FSK modem.
     // SX1262/SX1268 : Allowed values range from 1 to 65535.
-    if (radio.setPreambleLength(16) == RADIOLIB_ERR_INVALID_PREAMBLE_LENGTH) {
+    if (radio.setPreambleLength(CONFIG_RADIO_PRE) == RADIOLIB_ERR_INVALID_PREAMBLE_LENGTH) {
         Serial.println("Selected preamble length is invalid for this module! >>>>> stopped");
         while (true);
     }
@@ -246,18 +246,11 @@ void setup()
     digitalWrite(RADIO_CTRL, LOW);
 #endif /*RADIO_CTRL*/
 
-    // start transmitting the first packet
-    Serial.print("Radio Sending first packet ... ");
+    Serial.println("Setup finished");
 
-    // you can transmit C-string or Arduino string up to 256 characters long
-    transmissionState = radio.startTransmit(String(counter).c_str());
-    // you can also transmit byte array up to 256 bytes long
-    /*
-      byte byteArr[] = {0x01, 0x23, 0x45, 0x67,
-                        0x89, 0xAB, 0xCD, 0xEF};
-      state = radio.startTransmit(byteArr, 8);
-    */
-    delay(1000);
+    payload = "HELLO";
+    Serial.printf("Radio Sending packet: %s ... ", payload.c_str());
+    transmissionState = radio.startTransmit(payload);
     drawMain();
 }
 
@@ -265,8 +258,6 @@ void loop()
 {
     if (transmittedFlag) {    // check if the previous transmission finished
         transmittedFlag = false;  // reset flag
-
-        payload = "TB-1W #" + String(counter++);
 
         if (transmissionState == RADIOLIB_ERR_NONE) {
             Serial.println("transmission finished!");  // packet was successfully sent
@@ -276,22 +267,12 @@ void loop()
             Serial.printf("failed, code %u", transmissionState);
         }
 
-        // clean up after transmission is finished this will ensure transmitter is disabled,
-        // RF switch is powered down etc.
-        radio.finishTransmit();
-
-        drawMain();
-
         delay(5000);  // wait a second before transmitting again
 
-        Serial.print("Radio Sending another packet ... ");
-        // you can transmit C-string or Arduino string up to 256 characters long
+        payload = "TB-1W #" + String(counter++);
+        drawMain();
+
+        Serial.printf("Radio Sending packet: %s ... ", payload.c_str());
         transmissionState = radio.startTransmit(payload);
-        // you can also transmit byte array up to 256 bytes long
-        /*
-          byte byteArr[] = {0x01, 0x23, 0x45, 0x67,
-                            0x89, 0xAB, 0xCD, 0xEF};
-          int state = radio.startTransmit(byteArr, 8);
-        */
     }
 }
