@@ -480,6 +480,39 @@ unsigned long bme680_timer = millis();
 int delay_bme680 = 0;
 #endif
 
+//=======================================================================================
+#ifdef NTC_PIN
+    //NCP18XH103F03RB: https://item.szlcsc.com/14214.html
+    #define SERIES_RESISTOR 10000 // Series resistance value (10kΩ)
+    #define B_COEFFICIENT 3950 // B value, set according to the NTC specification
+    #define ROOM_TEMP 298.15 // 25°C absolute temperature (K)
+    #define ROOM_TEMP_RESISTANCE 10000 // Resistance of NTC at 25°C (10kΩ)
+
+float getTempForNTC()
+{
+    static float temperature = 0.0f;
+#ifdef NTC_PIN
+    static uint32_t check_temperature = 0;
+    if (millis() > check_temperature) {
+        float voltage = analogReadMilliVolts(NTC_PIN) / 1000.0;
+        float resistance = SERIES_RESISTOR * ((3.3 / voltage) - 1); // Calculate the resistance of NTC
+
+        // Calculate temperature using the Steinhart-Hart equation
+        temperature = (1.0 / (log(resistance / ROOM_TEMP_RESISTANCE) / B_COEFFICIENT + 1.0 / ROOM_TEMP)) - 273.15;
+
+        // Serial.print("Temperature: ");
+        // Serial.print(temperature);
+        // Serial.println(" °C");
+
+        check_temperature  = millis() + 1000;
+    }
+#endif
+    return temperature;
+}
+#endif
+//=======================================================================================
+
+
 void esp32setup()
 {
     // Initialize T5-EPAPER GUI
@@ -540,6 +573,7 @@ void esp32setup()
 
         #ifdef FAN_CTRL
             pinMode(FAN_CTRL, OUTPUT);
+            digitalWrite(FAN_CTRL,HIGH);  // derzeit nur fix ein [OE3WAS]
         #endif
 
     #endif
@@ -2391,6 +2425,14 @@ void esp32loop()
                 Serial.printf("%s;[HEAP];%d;(free)\n", getTimeString().c_str(), ESP.getFreeHeap());
                 Serial.printf("%s;[PSRM];%d\n", getTimeString().c_str(), ESP.getFreePsram());
             }
+
+            #if defined(NTC_PIN) && defined(FAN_CTRL) // BOARD_TBEAM_1W
+            float NTCtemp = getTempForNTC();
+            if (NTCtemp > 40.0) { digitalWrite(FAN_CTRL, HIGH); 
+            } else if (NTCtemp < 25.0) { digitalWrite(FAN_CTRL, LOW); }
+
+            Serial.printf("%s;[TEMP];%.1f;%s\n", getTimeString().c_str(), NTCtemp, digitalRead(FAN_CTRL) ? "on" : "off");
+            #endif
 
             BattTimeWait = millis();
         }
