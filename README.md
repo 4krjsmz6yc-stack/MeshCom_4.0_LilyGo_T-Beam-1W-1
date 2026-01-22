@@ -22,11 +22,11 @@
 ### ToDo-List [⬆️](#lilygo-t-beam-1w)
 - [x] **Vorbereitung**: Start mit FW-Version 4.35k (fork von [**MeshCom-FW**  ](https://github.com/icssw-org/MeshCom-Firmware))
 - [x] [**Pin Map**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/README.md#pin-map-%EF%B8%8F)
-- [ ] [**examples**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/examples#fw-beispiele)
+- [x] [**examples**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/examples#fw-beispiele)
 - [x] **OLED Example** `OLED_SH1106_Test` getestet mit **T3_V1.6.1** & **LilyGo T-Beam-1W**
 - [x] **SD-Card Example** `SD_Test` getestet mit **T3_V1.6.1** & **LilyGo T-Beam-1W**
 - [x] **LoRa Example** `RadioLib_Receive_Interrupt` getestet mit **T3_V1.6.1** & **LilyGo T-Beam-1W**
-- [ ] **LoRa Example** `RadioLib_Transmit_Interrupt`
+- [x] **LoRa Example** `RadioLib_Transmit_Interrupt` getestet mit **T3_V1.6.1** & **LilyGo T-Beam-1W**
 
 ---
 ### Implementierung [⬆️](#lilygo-t-beam-1w)
@@ -48,8 +48,8 @@
 - [x] **Display**: 1.3" SH1106 128 x 64
 - [x] **System Power**: SM8102ABC
 - [x] **LoRa RX**: SX1262 (MeshCom: 433.175 MHz BW: 250 CR: 4/6 SF: 11 SW: 0x2B Preamble: 32(8?))
-- [ ] **LoRa TX-Power**: TPS562208DDCR (LDO_EN)
-- [ ] **GPS**: L76K GNSS Module
+- [x] **LoRa TX-Power**: TPS562208DDCR (LDO_EN)
+- [x] **GPS**: L76K GNSS Module
 
 ---
 ### Wie Kompilieren? [⬆️](#lilygo-t-beam-1w)
@@ -174,5 +174,5 @@ https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series/blob/master/docs/en/t_beam_
 * Ich weise auf die gesetzlichen Bestimmungen bez. Elektrogeräten, Funkanlagen u.ä. hin, die von jedem Anwender selber einzuhalten sind.
 
 ---
-***:copyright: 17.1.2026 by OE3WAS - Wolfgang***
+***:copyright: 22.1.2026 by OE3WAS - Wolfgang***
 

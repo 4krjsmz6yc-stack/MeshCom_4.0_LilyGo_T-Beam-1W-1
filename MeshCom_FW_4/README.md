@@ -14,18 +14,16 @@
 - [x] User-**BUTTON** (**`--button gpio 17 --button on --reboot`**, LongPress = Display on/off, Click = Screens blättern, DoubleClick = Track POS sent, TrippleClick = POS-Anzeige on/off)
 - [x] **LoRa**: SX1262 RX
 - [≈] **BATT** [**FW 4.35l.01.21.a**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/releases/tag/4.35l.01.21.a)
+- [x] **LoRa**: SX1262 TX
 - [≈] **GPS**: L76K [TinyGPS-Example](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/exam2/TinyGPS_Example/firmware) (LAT,LON,ALT,Sats,HDOP,Date, TimeUTC)
 - [≈] **OTA** noch ausführlich testen
-- [ ] **LoRa**: SX1262 TX
 - [ ] tools/**download_meshcom.py** u.a. noch anpassen
 - [ ] Freigabe von **Sensoren**
 - [ ] **MQTT** (siehe auch https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/discussions/7)
 - [ ] Temperaturmessung und Lüfter-Steuerung (siehe auch https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/discussions/6)
 
-* LoRa RX SX1262 TCXO XY16P354 (400..433..520 MHz) [DIO2 & TCXO (DIO3) setzen]
-* LoRa TX SX1262 TCXO XY16P354 (400..433..520 MHz)
-
+* LoRa RX/TX SX1262 TCXO XY16P354 (400..433..520 MHz)
 
 ---
-***20.1.2026 by OE3WAS - Wolfgang***
+***22.1.2026 by OE3WAS - Wolfgang***
 
