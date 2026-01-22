@@ -51,6 +51,9 @@ static String payload;
 
 // this function is called when a complete packet is transmitted by the module
 // IMPORTANT: this function MUST be 'void' type and MUST NOT have any arguments!
+#if defined(ESP8266) || defined(ESP32)
+  ICACHE_RAM_ATTR
+#endif
 void setFlag(void) { transmittedFlag = true; } // we sent a packet, set the flag
 
 //=======================================================================================
@@ -137,7 +140,7 @@ void setup()
         // T-BEAM-1W Control SX1262, LNA, must set RADIO_LDO_EN to HIGH to power the Radio
         pinMode(RADIO_LDO_EN, OUTPUT);
         digitalWrite(RADIO_LDO_EN, HIGH);
-        delay(200);
+        delay(500);
     #endif
 
     #ifdef RADIO_CTRL
@@ -146,10 +149,12 @@ void setup()
         // When TX DATA is on, RADIO_CTRL is set to 0 and LNA is turned off.
         pinMode(RADIO_CTRL, OUTPUT);
         digitalWrite(RADIO_CTRL, HIGH);  // RX Mode
-        delay(200);
+        delay(500);
     #endif
 
-    int state = radio.begin();    // initialize radio with default settings
+    Serial.println("... radio.begin ...");
+    int state = radio.begin(CONFIG_RADIO_FREQ);    // initialize radio with default settings
+    Serial.printf("... radio state: %u", state);
 
     #ifdef USING_SX1262
     // Some SX126x modules use DIO2 as RF switch. To enable this feature, the following method can be used.
@@ -273,8 +278,13 @@ void loop()
             Serial.printf("failed, code %u", transmissionState);
         }
 
+        // clean up after transmission is finished this will ensure transmitter is disabled,
+        // RF switch is powered down etc.
+        radio.finishTransmit();
+
         drawMain();
-        delay(5000);  // wait a second before transmitting again
+
+        delay(2000);  // wait a second before transmitting again
 
         Serial.print("Radio Sending another packet ... ");
         // you can transmit C-string or Arduino string up to 256 characters long
