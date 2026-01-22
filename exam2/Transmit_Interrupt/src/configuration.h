@@ -2,7 +2,59 @@
 
 #define UNUSED_PIN                   (0)
 
-#if defined(T_BEAM_1W)
+///< ----- T3 V1.6.1 ----- https://lilygo.cc/products/lora3
+#if defined(T3_V1_6_SX1276) || defined(T3_V1_6_SX1278)
+
+#if   defined(T3_V1_6_SX1276)
+#ifndef USING_SX1276
+#define USING_SX1276
+#endif
+#elif defined(T3_V1_6_SX1278)
+#ifndef USING_SX1278
+#define USING_SX1278
+#endif
+#endif // T3_V1_6_SX1276 || T3_V1_6_SX1278
+
+#define I2C_SDA                     21
+#define I2C_SCL                     22
+#define OLED_RST                    UNUSED_PIN
+
+#define RADIO_SCLK_PIN              5
+#define RADIO_MISO_PIN              19
+#define RADIO_MOSI_PIN              27
+#define RADIO_CS_PIN                18
+#define RADIO_DIO0_PIN              26
+#define RADIO_RST_PIN               23
+#define RADIO_DIO1_PIN              33
+// SX1276/78
+#define RADIO_DIO2_PIN              32
+// SX1262
+#define RADIO_BUSY_PIN              32
+
+#define SDCARD_MOSI                 15
+#define SDCARD_MISO                 2
+#define SDCARD_SCLK                 14
+#define SDCARD_CS                   13
+
+#define BOARD_LED                   25
+#define LED_ON                      HIGH
+#define LED_OFF                     LOW
+
+#define ADC_PIN                     35
+
+#define HAS_SDCARD
+#define HAS_DISPLAY
+
+#define BOARD_VARIANT_NAME          "T3 V1.6"
+#define DISPLAY_MODEL_SSD_LIB       SSD1306Wire
+#define DISPLAY_MODEL               U8G2_SSD1306_128X64_NONAME_F_HW_I2C
+#define BAT_ADC_PULLUP_RES          (100000.0)
+#define BAT_ADC_PULLDOWN_RES        (100000.0)
+#define BAT_MAX_VOLTAGE             (4.2)
+#define BAT_VOL_COMPENSATION        (0.0)
+
+///< ----- T-Beam 1W ----- LoRa 2W
+#elif defined(T_BEAM_1W)
 
 #ifndef USING_SX1262
 #define USING_SX1262
@@ -72,4 +124,8 @@
 
 #if  defined(USING_SX1262)
 #define RADIO_TYPE_STR  "SX1262"
+#elif defined(USING_SX1276)
+#define RADIO_TYPE_STR  "SX1276"
+#elif defined(USING_SX1278)
+#define RADIO_TYPE_STR  "SX1278"
 #endif

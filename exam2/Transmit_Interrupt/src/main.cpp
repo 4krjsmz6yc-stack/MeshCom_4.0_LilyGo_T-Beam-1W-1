@@ -33,7 +33,7 @@
 #include "Timeout.h"
 Timeout timerSerial;
 
-#if defined(USING_SX1262)
+#if defined(USING_SX1262) || defined(USING_SX1276)
 
     #ifndef CONFIG_RADIO_OUTPUT_POWER
     #define CONFIG_RADIO_OUTPUT_POWER   2
@@ -42,6 +42,11 @@ Timeout timerSerial;
     SX1262 radio = new Module(RADIO_CS_PIN, RADIO_DIO1_PIN, RADIO_RST_PIN, RADIO_BUSY_PIN);
 
 #endif // USING_SX1262
+
+#if     defined(USING_SX1276)
+SX1276 radio = new Module(RADIO_CS_PIN, RADIO_DIO0_PIN, RADIO_RST_PIN, RADIO_DIO1_PIN);
+#endif
+
 
 
 static int transmissionState = RADIOLIB_ERR_NONE;  // save transmission state between loops
