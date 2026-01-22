@@ -99,9 +99,9 @@ void disablePeripherals();
 #endif
 
 #ifdef DISPLAY_MODEL
-extern DISPLAY_MODEL *u8g2;
-#define U8G2_HOR_ALIGN_CENTER(t)    ((u8g2->getDisplayWidth() -  (u8g2->getUTF8Width(t))) / 2)
-#define U8G2_HOR_ALIGN_RIGHT(t)     ( u8g2->getDisplayWidth()  -  u8g2->getUTF8Width(t))
+extern DISPLAY_MODEL *disp;
+#define U8G2_HOR_ALIGN_CENTER(t)    ((disp->getDisplayWidth() -  (disp->getUTF8Width(t))) / 2)
+#define U8G2_HOR_ALIGN_RIGHT(t)     ( disp->getDisplayWidth()  -  disp->getUTF8Width(t))
 #endif
 
 

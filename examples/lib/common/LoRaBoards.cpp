@@ -30,10 +30,6 @@ SPIClass SDCardSPI(HSPI);
 #include "driver/gpio.h"
 #endif //ARDUINO_ARCH_ESP32
 
-#ifdef DISPLAY_MODEL
-U8G2 *disp = NULL;
-#endif
-
 static DevInfo_t  devInfo;
 uint32_t deviceOnline = 0x00;
 static void enable_slow_clock();
@@ -47,6 +43,8 @@ String gps_model = "None";
 uint8_t  display_address = 0x3c;    // It might be 0x3D
 
 #ifdef DISPLAY_MODEL
+DISPLAY_MODEL *disp = NULL;
+
 bool beginDisplay()
 {
     Wire.beginTransmission(display_address);
@@ -262,8 +260,8 @@ void setupBoards()
     Serial.begin(115200);
     while (!Serial);
     for (int i=0;i<10;i++) {
-        Serial.print(".");
-        delay(10000);
+        Serial.println(".");
+        delay(1000);
     }
     Serial.println("setupBoards");
 
@@ -426,7 +424,7 @@ void printResult(bool radio_online)
     Serial.printf("PSRAM        : %s\n", (psramFound()) ? "+" : "-");
 
 #ifdef DISPLAY_MODEL
-    Serial.printf("Display      : %s\n", (u8g2) ? "+" : "-");
+    Serial.printf("Display      : %s\n", (disp) ? "+" : "-");
 #endif
 
 #ifdef HAS_SDCARD
@@ -462,7 +460,7 @@ void printResult(bool radio_online)
         disp->drawStr( 62, 54, "Power:");    disp->drawStr( 120, 54, ( PMU ) ? "+" : "-");
 #endif
 
-        u8g2->sendBuffer();
+        disp->sendBuffer();
         delay(5000);
     }
 #endif

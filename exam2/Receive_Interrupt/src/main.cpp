@@ -54,6 +54,9 @@ static String payload = "0";
 
 // this function is called when a complete packet is received by the module
 // IMPORTANT: this function MUST be 'void' type and MUST NOT have any arguments!
+#if defined(ESP8266) || defined(ESP32)
+ICACHE_RAM_ATTR
+#endif
 void setFlag(void) { receivedFlag = true; } // we got a packet, set the flag
 
 //=======================================================================================
@@ -117,42 +120,53 @@ void setup()
         Serial.println(".");
         delay(1000);
     }
+
     Serial.println("\nSetup Board");
-
-    #if defined(ARDUINO_ARCH_ESP32)
-        SPI.begin(RADIO_SCLK_PIN, RADIO_MISO_PIN, RADIO_MOSI_PIN);
-    #endif
-
-    #ifdef RADIO_LDO_EN
-        // 1W and BPF LoRa LDO enable , Control SX1262 , LNA
-        // 1W and BPF  Radio version must set LDO_EN to HIGH to initialize the Radio
-        pinMode(RADIO_LDO_EN, OUTPUT);
-        digitalWrite(RADIO_LDO_EN, HIGH);
-    #endif
-
-    #ifdef RADIO_CTRL
-        // 1W LoRa RX TX Control
-        // RADIO_CTRL controls the LNA, not the PA.
-        // Only when RX DATA is on, set to 1 to turn on LNA
-        // When TX DATA is on, RADIO_CTRL is set to 0 and LNA is turned off.
-        pinMode(RADIO_CTRL, OUTPUT);
-        digitalWrite(RADIO_CTRL, LOW);
-    #endif
 
     #ifdef I2C_SDA
         Wire.begin(I2C_SDA, I2C_SCL);
+        //scanDevices(&Wire);
     #endif
-
     beginDisplay();
 
-    Serial.printf("[%s]:", RADIO_TYPE_STR);
-    Serial.printf("Radio Initializing ...\n");
-    int state = radio.begin();    // initialize radio with default settings
-    if (state == RADIOLIB_ERR_NONE) {
-        Serial.println("success!");
+    Serial.println("Receive_Interrupt_Example");
+
+    SPI.begin(RADIO_SCLK_PIN, RADIO_MISO_PIN, RADIO_MOSI_PIN);
+
+    #if defined(HAS_SDCARD) && defined(SD_SHARE_SPI_BUS)
+    // Share spi bus with lora , set lora cs,rst to high
+        pinMode(RADIO_CS_PIN, OUTPUT);
+        pinMode(RADIO_RST_PIN, OUTPUT);
+        digitalWrite(RADIO_CS_PIN, HIGH);
+        digitalWrite(RADIO_RST_PIN, HIGH);
+    #endif
+
+    #ifdef RADIO_LDO_EN
+    // T-BEAM-1W Control SX1262, LNA, must set RADIO_LDO_EN to HIGH to power the Radio
+        pinMode(RADIO_LDO_EN, OUTPUT);
+        digitalWrite(RADIO_LDO_EN, HIGH);
+        delay(200);
+    #endif
+
+    #ifdef RADIO_CTRL
+    // T-BEAM-1W LoRa RX/TX Control. RADIO_CTRL controls the LNA, not the PA.
+    // Only when RX DATA is on, set to 1 to turn on LNA.
+    // When TX DATA is on, RADIO_CTRL is set to 0 and LNA is turned off.
+        pinMode(RADIO_CTRL, OUTPUT);
+        digitalWrite(RADIO_CTRL, HIGH);
+        delay(200);
+    #endif
+
+
+    Serial.printf("[%s]:Radio Initializing ...\n", RADIO_TYPE_STR);
+
+    int state = radio.begin(433.175F);    // initialize radio with default settings
+
+    if (state == RADIOLIB_ERR_NONE) { Serial.println("success!");
+    } else if (state == RADIOLIB_ERR_CHIP_NOT_FOUND) {
+        Serial.printf("failed, RADIOLIB_ERR_CHIP_NOT_FOUND >>>>> stopped\n"); while(true);
     } else {
-        Serial.printf("failed, code %u >>>>> stopped\n", state);
-        while(true);
+        Serial.printf("failed, code %i >>>>> stopped\n", state); while(true);
     }
 
     // set the function that will be called when new packet is received

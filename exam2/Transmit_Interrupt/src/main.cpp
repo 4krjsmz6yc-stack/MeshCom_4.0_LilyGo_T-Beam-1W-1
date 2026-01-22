@@ -51,9 +51,11 @@ static String payload;
 
 // this function is called when a complete packet is transmitted by the module
 // IMPORTANT: this function MUST be 'void' type and MUST NOT have any arguments!
+/*
 #if defined(ESP8266) || defined(ESP32)
-  ICACHE_RAM_ATTR
+ICACHE_RAM_ATTR
 #endif
+*/
 void setFlag(void) { transmittedFlag = true; } // we sent a packet, set the flag
 
 //=======================================================================================
@@ -126,8 +128,6 @@ void setup()
     
     beginDisplay();
 
-    SPI.begin(RADIO_SCLK_PIN, RADIO_MISO_PIN, RADIO_MOSI_PIN);
-
     #if defined(HAS_SDCARD) && defined(SD_SHARE_SPI_BUS)
         // Share spi bus with lora , set lora cs,rst to high
         pinMode(RADIO_CS_PIN, OUTPUT);
@@ -151,6 +151,8 @@ void setup()
         digitalWrite(RADIO_CTRL, HIGH);  // RX Mode
         delay(500);
     #endif
+
+    SPI.begin(RADIO_SCLK_PIN, RADIO_MISO_PIN, RADIO_MOSI_PIN);
 
     Serial.println("... radio.begin ...");
     int state = radio.begin(CONFIG_RADIO_FREQ);    // initialize radio with default settings
