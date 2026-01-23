@@ -6,18 +6,17 @@
 - [x] **boards** JSON-Datei [boards/esp32-s3-wroom-1-n16r8.json]
 - [x] **pinning** anpassen
 - [x] **Display**: SH1106
-- [x] **WiFi** als Gateway
-- [x] **Webserver**
+- [x] **WiFi** als Gateway & **Webserver**
 - [X] **BLE**
 - [x] **HW-ID** 51 = TBEAM_1W
 - [x] On-Board-**LED** (**`--board led {on|off}`**)
 - [x] User-**BUTTON** (**`--button gpio 17 --button on --reboot`**, LongPress = Display on/off, Click = Screens blättern, DoubleClick = Track POS sent, TrippleClick = POS-Anzeige on/off)
 - [x] **LoRa**: SX1262 [Receive-Interrupt-Example](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/examples2/Receive_Interrupt)
 - [≈] **BATT** noch fehlerhaft [siehe #11](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/issues/11)
-- [x] **Temperaturmessung** und **Lüfter-Steuerung** [**FW 4.35l.01.22.b**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/releases/tag/4.35l.01.22.b) (siehe auch https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/discussions/6)
-- [≈] **LoRa**: SX1262 [Transmit-Interrupt-Example](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/examples2/Transmit_Interrupt)
+- [x] **Temperaturmessung** und **Lüfter-Steuerung** (siehe auch https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/discussions/6)
+- [x] **LoRa**: SX1262 [Transmit-Interrupt-Example](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/examples2/Transmit_Interrupt) [**FW 4.35l.01.23.a**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/releases/tag/4.35l.01.23.a)
 - [≈] **GPS**: L76K [TinyGPS-Example](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/examples2/TinyGPS_Example) (LAT,LON,ALT,Sats,HDOP,Date, TimeUTC)
-- [≈] **OTA** noch ausführlich testen
+- [ ] **OTA** noch ausführlich testen
 - [ ] tools/**download_meshcom.py** u.a. noch anpassen
 - [ ] Freigabe von **Sensoren**
 - [ ] **MQTT** (siehe auch https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/discussions/7)
