@@ -33,24 +33,18 @@
 #include "Timeout.h"
 Timeout timerSerial;
 
+//=======================================================================================
+#ifndef CONFIG_RADIO_OUTPUT_POWER
+    #define CONFIG_RADIO_OUTPUT_POWER   10
+#endif
+
 #if defined(USING_SX1262)
-
-    #ifndef CONFIG_RADIO_OUTPUT_POWER
-    #define CONFIG_RADIO_OUTPUT_POWER   2
-    #endif
-
     SX1262 radio = new Module(RADIO_CS_PIN, RADIO_DIO1_PIN, RADIO_RST_PIN, RADIO_BUSY_PIN);
-
 #endif // USING_SX1262
 
 #if     defined(USING_SX1276)
-    #ifndef CONFIG_RADIO_OUTPUT_POWER
-    #define CONFIG_RADIO_OUTPUT_POWER   10
-    #endif
     SX1276 radio = new Module(RADIO_CS_PIN, RADIO_DIO0_PIN, RADIO_RST_PIN, RADIO_DIO1_PIN);
 #endif
-
-
 
 static int transmissionState = RADIOLIB_ERR_NONE;  // save transmission state between loops
 static volatile bool transmittedFlag = false;  // flag to indicate that a packet was sent
@@ -150,8 +144,8 @@ void setup()
 
     #ifdef RADIO_CTRL
         // T-BEAM-1W LoRa RX/TX Control. RADIO_CTRL controls the LNA, not the PA.
-        // Only when RX DATA is on, set to 1 to turn on LNA.
-        // When TX DATA is on, RADIO_CTRL is set to 0 and LNA is turned off.
+        // Only when RX DATA set to 1 to turn on LNA.
+        // When TX DATA set to 0 to turn off LNA
         pinMode(RADIO_CTRL, OUTPUT);
         digitalWrite(RADIO_CTRL, HIGH);  // RX Mode
         delay(500);
@@ -254,6 +248,7 @@ void setup()
     drawMain();
 }
 
+//=======================================================================================
 void loop()
 {
     if (transmittedFlag) {    // check if the previous transmission finished

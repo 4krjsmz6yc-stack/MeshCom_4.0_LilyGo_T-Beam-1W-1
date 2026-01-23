@@ -986,8 +986,7 @@ bool doTX()
 
                 tx_is_active = true;
 
-                // you can transmit C-string or Arduino string up to
-                // 256 characters long
+                // you can transmit C-string or Arduino string up to 256 characters long
                 // Position zumindest alle funf Minuten auch zu MeshCom senden
                 if(millis() > track_to_meshcom_timer + 1000 * 60 * 5)
                 {
@@ -995,6 +994,10 @@ bool doTX()
                         Radio.Send(lora_tx_buffer, sendlng);
                     #else
                         #ifndef BOARD_T5_EPAPER
+                        #ifdef RADIO_CTRL
+                            digitalWrite(RADIO_CTRL, LOW);  // TX Mode [OE3WAS]
+                            delay(2);
+                        #endif
                         transmissionState = radio.startTransmit(lora_tx_buffer, sendlng);
                         #endif
                         bLED_RED = true;
@@ -1011,13 +1014,16 @@ bool doTX()
                     return false;
                 }
                 
-                // you can transmit C-string or Arduino string up to
-                // 256 characters long
+                // you can transmit C-string or Arduino string up to 256 characters long
                 #if defined BOARD_RAK4630
                     Radio.Send(lora_tx_buffer, sendlng);
                 #else
                     #ifndef BOARD_T5_EPAPER
-                    transmissionState = radio.startTransmit(lora_tx_buffer, sendlng);
+                    #ifdef RADIO_CTRL
+                        digitalWrite(RADIO_CTRL, LOW);  // TX Mode [OE3WAS]
+                        delay(2);
+                    #endif
+                        transmissionState = radio.startTransmit(lora_tx_buffer, sendlng);
                     #endif
                     bLED_ORANGE = true;
                 #endif
@@ -1078,7 +1084,11 @@ bool doTX()
                         Radio.Send(lora_tx_buffer, sendlng);
                     #else
                         #ifndef BOARD_T5_EPAPER
-                        transmissionState = radio.startTransmit(lora_tx_buffer, sendlng);
+                        #ifdef RADIO_CTRL
+                            digitalWrite(RADIO_CTRL, LOW);  // TX Mode [OE3WAS]
+                            delay(2);
+                        #endif
+                            transmissionState = radio.startTransmit(lora_tx_buffer, sendlng);
                         #endif
                         bLED_RED = true;
                     #endif

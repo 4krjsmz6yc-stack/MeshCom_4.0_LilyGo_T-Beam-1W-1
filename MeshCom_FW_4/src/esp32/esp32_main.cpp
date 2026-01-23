@@ -1672,7 +1672,13 @@ void esp32loop()
 
                 transmittedFlag = false;
 
-                if (transmissionState == RADIOLIB_ERR_NONE)
+            #endif
+        
+            #ifdef RADIO_CTRL
+            digitalWrite(RADIO_CTRL, HIGH);  // RX Mode [OE3WAS]
+            delay(500);
+
+            if (transmissionState == RADIOLIB_ERR_NONE)
                 {
                     // packet was successfully sent
                     if(bLORADEBUG)
@@ -1690,7 +1696,7 @@ void esp32loop()
                 // clean up after transmission is finished
                 // this will ensure transmitter is disabled,
                 // RF switch is powered down etc.
-                radio.finishTransmit();
+                radio.finishTransmit();  // hat keine Wirkung, ist leere Definition [OE3WAS]
 
                 #ifndef BOARD_TLORA_OLV216
                 // reset MeshCom now
