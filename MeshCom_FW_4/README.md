@@ -6,8 +6,7 @@
 - [x] **boards** JSON-Datei [boards/esp32-s3-wroom-1-n16r8.json]
 - [x] **pinning** anpassen
 - [x] **Display**: SH1106
-- [x] **WiFi** als Gateway
-- [x] **Webserver**
+- [x] **WiFi** als Gateway & **Webserver**
 - [X] **BLE**
 - [x] **HW-ID** 51 = TBEAM_1W
 - [x] On-Board-**LED** (**`--board led {on|off}`**)
