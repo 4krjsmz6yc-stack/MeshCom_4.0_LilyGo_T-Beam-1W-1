@@ -8,6 +8,8 @@
 * [Wie Kompilieren?](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/README.md#wie-kompilieren-%EF%B8%8F)
 * [Wie Modul Flashen?](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/README.md#wie-modul-flashen-%EF%B8%8F)
 * [Pin Map](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/README.md#pin-map-%EF%B8%8F)
+* [P5/P6 Stift-/Buchsenleiste](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/README.md#p5p6-stift-buchsenleiste-%EF%B8%8F)
+* [QWICC-Stecker](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/README.md#qwiic-stecker-%EF%B8%8F)
 
 ---
 ### Intention [⬆️](#lilygo-t-beam-1w)
@@ -131,6 +133,7 @@ siehe: [firmware-upload](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/
 ### QWIIC-Stecker [⬆️](#lilygo-t-beam-1w)
 <img width="242" height="216" alt="grafik" src="https://github.com/user-attachments/assets/8e99959b-7b9b-415f-9cc3-98a9cf5135e7" />
 
+---
 〰️ ☑️⭕️🚫⚠️🔴🟠🟡🟢🔵🟣⚫️⚪️🟤🔷🔹❗  
 
 > \[!IMPORTANT]
