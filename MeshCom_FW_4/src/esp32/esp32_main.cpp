@@ -818,11 +818,8 @@ void esp32setup()
         SPI.begin(RF95_SCK, RF95_MISO, RF95_MOSI, RF95_NSS);
     #endif
 
-    #if defined (ENABLE_GPS)
-    bool bSETGPS_POWER=false;
-    #endif
-
     #if defined(ENABLE_GPS)
+    bool bSETGPS_POWER=false;
         bSETGPS_POWER=true;
     #endif
 

@@ -101,7 +101,8 @@ definitions for LilyGo T-BEAM 1W Board OE3WAS
 
 //todo #define BOARD_COUNTRY 5   // ???
 
-//#define ENABLE_GPS
+#define ENABLE_GPS
+#define GPS_L76K
 //#define ENABLE_BMX280
 //#define ENABLE_BMP390
 //#define ENABLE_AHT20
