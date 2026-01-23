@@ -14,8 +14,7 @@
 - [x] User-**BUTTON** (**`--button gpio 17 --button on --reboot`**, LongPress = Display on/off, Click = Screens blättern, DoubleClick = Track POS sent, TrippleClick = POS-Anzeige on/off)
 - [x] **LoRa**: SX1262 RX
 - [≈] **BATT** noch fehlerhaft [siehe #11](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/issues/11)
-- [x] **Temperaturmessung** und **Lüfter-Steuerung** [**FW 4.35l.01.22.b**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/releases/tag/4.35l.01.22.b)  
-       (siehe auch https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/discussions/6)
+- [x] **Temperaturmessung** und **Lüfter-Steuerung** [**FW 4.35l.01.22.b**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/releases/tag/4.35l.01.22.b) (siehe auch https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/discussions/6)
 - [≈] **LoRa**: SX1262 TX
 - [≈] **GPS**: L76K [TinyGPS-Example](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/exam2/TinyGPS_Example/firmware) (LAT,LON,ALT,Sats,HDOP,Date, TimeUTC)
 - [≈] **OTA** noch ausführlich testen
