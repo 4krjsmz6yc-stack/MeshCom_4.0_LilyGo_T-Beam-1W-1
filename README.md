@@ -123,9 +123,13 @@ siehe: [firmware-upload](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/
 ❌ = intern  
 🔷 = intern aber verwendbar
 
-❓ The PWR button is connected to the PMU:  
-* In shutdown mode, press the PWR button to turn on the power supply
-* In power-on mode, press the PWR button for 6 seconds (default time) to turn off the power supply
+---
+### P5/P6 Stift-/Buchsenleiste [⬆️](#lilygo-t-beam-1w)
+<img width="663" height="355" alt="grafik" src="https://github.com/user-attachments/assets/7821b069-caec-45c8-a940-28dc79163e76" />
+
+---
+### QWIIC-Stecker
+<img width="242" height="216" alt="grafik" src="https://github.com/user-attachments/assets/8e99959b-7b9b-415f-9cc3-98a9cf5135e7" />
 
 〰️ ☑️⭕️🚫⚠️🔴🟠🟡🟢🔵🟣⚫️⚪️🟤🔷🔹❗  
 
@@ -152,17 +156,10 @@ siehe: [firmware-upload](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/
 * Das Problem ist aber, dass es keinen `DIO2_PIN` gibt und auch eine automatische Umschaltung via RadioLib kontraproduktiv ist. **SX126x** wird dann nicht mehr erkannt!
 * <ins>Es verbleibt lediglich die **Umschaltung RX/TX** über den **CTRL_PIN**.</ins>
 
-| ❓ DIO2 PIN | CTRL PIN | RF Switch Status                                               |
-| -------- | -------- | -------------------------------------------------------------- |
-| 1        | 0        | ANT and TX channels connected, PA turned on, LNA powered off   |
-| 0        | 1        | ANT and RX channels are connected, PA is closed, LNA is opened |
-
-
-
-
-<img width="663" height="355" alt="grafik" src="https://github.com/user-attachments/assets/7821b069-caec-45c8-a940-28dc79163e76" />
-
-<img width="242" height="216" alt="grafik" src="https://github.com/user-attachments/assets/8e99959b-7b9b-415f-9cc3-98a9cf5135e7" />
+| ❓ DIO2 PIN | CTRL PIN | RF Switch Status                                  |
+| --- | --- | -------------------------------------------------------------- |
+| 1   | 0   | ANT and TX channels connected, PA turned on, LNA powered off   |
+| 0   | 1   | ANT and RX channels are connected, PA is closed, LNA is opened |
 
 ---
 ### • Link zu den Originaldokumenten: [⬆️](#lilygo-t-beam-1w)  
