@@ -38,7 +38,12 @@
 - [ ] Stift-/Buchse Leiste
 - [ ] Zusatz-PCBs
 - [ ] SD-Card (siehe auch https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/discussions/7)
-- [ ] 2x externe 4-pol Stecker RX/TX & I2C
+- [ ] 2x externe 4-pol Stecker RX/TX & I2C (QWIIC-Typ)  
+  - https://www.amazon.de/gp/product/B08HQ1VSVL/  
+  - https://exp-tech.de/blogs/blog/sparkfun-qwiic-wiki  
+  - Der PCB-Anschluss ist ein **SM04B-SRSS**. Der Gegenstecker ist ein **SHR04V-S-B**.  
+  - https://botland.de/qwiic-verbindungskabel/19155-flexibles-qwiic-kabel-mit-4-poligem-stecker-15-cm-sparkfun-prt-17261-5904422370114.html  
+  - https://www.amazon.de/Adafruit-QT-Cables-Parent/dp/B0DZ663M5R?th=1
 
 
 ---
