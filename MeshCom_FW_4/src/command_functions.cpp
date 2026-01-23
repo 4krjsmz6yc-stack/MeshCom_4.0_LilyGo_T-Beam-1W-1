@@ -903,6 +903,7 @@ void commandAction(char *umsg_text, bool ble)
             return ;
         }
 
+        analogSetAttenuation(adc_attenuation_t(dVar));  // [OE3WAS] setzen
         meshcom_settings.node_analog_atten=dVar;
 
         save_settings();
