@@ -22,11 +22,10 @@
 ### ToDo-List [⬆️](#lilygo-t-beam-1w)
 - [x] **Vorbereitung**: Start mit FW-Version 4.35k (fork von [**MeshCom-FW**  ](https://github.com/icssw-org/MeshCom-Firmware))
 - [x] [**Pin Map**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/README.md#pin-map-%EF%B8%8F)
-- [x] [**examples**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/examples#fw-beispiele)
+- [x] [**examples**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/examples#fw-beispiele) [**examples2**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/examples2#fw-beispiele)
 - [x] **OLED Example** `OLED_SH1106_Test` getestet mit **T3_V1.6.1** & **LilyGo T-Beam-1W**
 - [x] **SD-Card Example** `SD_Test` getestet mit **T3_V1.6.1** & **LilyGo T-Beam-1W**
-- [x] **LoRa Example** `RadioLib_Receive_Interrupt` getestet mit **T3_V1.6.1** & **LilyGo T-Beam-1W**
-- [x] **LoRa Example** `RadioLib_Transmit_Interrupt` getestet mit **T3_V1.6.1** & **LilyGo T-Beam-1W**
+- [x] **LoRa Example** `RadioLib_Receive_Interrupt` & `RadioLib_Transmit_Interrupt` getestet mit **T3_V1.6.1** & **LilyGo T-Beam-1W**
 
 ---
 ### Implementierung [⬆️](#lilygo-t-beam-1w)
@@ -142,14 +141,17 @@ siehe: [firmware-upload](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/
 * Suggestion: Please give the internal PA stabilization time before transmitting data: For SX1262 chip, the recommended configuration value is >800us  
 <img width="447" height="308" alt="grafik" src="https://github.com/user-attachments/assets/9e8e0751-901b-4a4c-a545-17a5fddf39d9" />
 
-* Wenn das Modul bereit ist, Daten zu senden/empfangen, muss man den RF-Schalter des Moduls im Voraus auf den Sende-/Empfangskanal umschalten. Dieser Schalter ist ein einpoliger Doppeldrehschalter. Siehe die Wahrheitstabelle:
+* Wenn das Modul bereit ist, Daten zu senden/empfangen, muss man den RF-Schalter des Moduls im Voraus auf den Sende-/Empfangskanal umschalten. Dieser Schalter ist ein einpoliger Doppeldrehschalter.
+* **Während des TX DATA ist es wahrscheinlich, dass der PA-Chip im Modul beschädigt wird, wenn der Schalter nicht vorher in die richtige Position geschaltet wird.**
+* Das Problem ist aber, dass es keinen `DIO2_PIN` gibt und auch eine automatische Umschaltung via RadioLib kontraproduktiv ist. **SX126x** wird dann nicht mehr erkannt!
+* <ins>Es verbleibt lediglich die **Umschaltung RX/TX** über den **CTRL_PIN**.</ins>
 
 | ❓ DIO2 PIN | CTRL PIN | RF Switch Status                                               |
 | -------- | -------- | -------------------------------------------------------------- |
 | 1        | 0        | ANT and TX channels connected, PA turned on, LNA powered off   |
 | 0        | 1        | ANT and RX channels are connected, PA is closed, LNA is opened |
 
-* **Während des TX DATA ist es wahrscheinlich, dass der PA-Chip im Modul beschädigt wird, wenn der Schalter nicht vorher in die richtige Position geschaltet wird.**
+
 
 
 <img width="663" height="355" alt="grafik" src="https://github.com/user-attachments/assets/7821b069-caec-45c8-a940-28dc79163e76" />
@@ -174,5 +176,5 @@ https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series/blob/master/docs/en/t_beam_
 * Ich weise auf die gesetzlichen Bestimmungen bez. Elektrogeräten, Funkanlagen u.ä. hin, die von jedem Anwender selber einzuhalten sind.
 
 ---
-***:copyright: 22.1.2026 by OE3WAS - Wolfgang***
+***:copyright: 23.1.2026 by OE3WAS - Wolfgang***
 
