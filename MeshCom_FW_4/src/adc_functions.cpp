@@ -82,7 +82,7 @@ void loop_ADCFunctions()
                 #if defined(BOARD_E22)
                     float vref = 3300.0; // ESP32 DevKitC v4 has 3.3 V
                 #else
-                    float vref = 1100.0; // ESP32-S3 Bereich 1000 .. 1200 [mV]
+                    float vref = S3_VREF; // ESP32-S3 Bereich 1000 .. 1200 [mV]
                 #endif
                 
                 ADCalpha = meshcom_settings.node_analog_alpha - (int)meshcom_settings.node_analog_alpha; // 0.001 .. 0.999

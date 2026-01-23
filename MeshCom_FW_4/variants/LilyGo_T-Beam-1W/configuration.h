@@ -74,7 +74,6 @@ definitions for LilyGo T-BEAM 1W Board OE3WAS
 
 #define ANALOG_PIN ADC_PIN  //testweise
 #define ANALOG_REFRESH_INTERVAL 30 // sec messure intervall
-//#define ADC_MULTIPLIER 5.7    // default and can be overwritten with Flash variable node_analog_batt_faktor Spannungsteiler 47k+10k
 
 #define GPS_SLEEP_HOLD_ON_LOW
 #define GPS_BAUD_RATE               9600
@@ -116,13 +115,13 @@ definitions for LilyGo T-BEAM 1W Board OE3WAS
 
 
 #define CURRENT_LIMIT 140 // in mA +20dBm are about 120mA -> check if enough headroom 
-#define TX_POWER_MAX 22  // max 22 dBm
+#define TX_POWER_MAX 15  // SX1262 max 22 dBm bzw. SX1261 15 dBm
 #define TX_POWER_MIN 2
 #define LORA_PREAMBLE_LENGTH DEFAULT_PREAMPLE_LENGTH  // Same for Tx and Rx
 
 //todo #define WAIT_TX x         // waiting after Lora TX in doTX() >800µs
 
-#define TX_OUTPUT_POWER 2
+#define TX_OUTPUT_POWER 8
 
 /**
  * RadioLib Coding Rate: Allowed values range from 5 to 8.
@@ -151,4 +150,4 @@ definitions for LilyGo T-BEAM 1W Board OE3WAS
 // LilyGo T-BEAM 1W + ESP32-S3-WROOM-1-N16R8
 // spezielle externe User GPIO noch nicht voll ausdefiniert
 // ===== GPIOs =====
-//#define OneWire_GPIO 47
+//#define OneWire_GPIO xxx
