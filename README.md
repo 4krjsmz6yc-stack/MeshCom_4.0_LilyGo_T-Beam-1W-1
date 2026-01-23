@@ -128,7 +128,7 @@ siehe: [firmware-upload](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/
 <img width="663" height="355" alt="grafik" src="https://github.com/user-attachments/assets/7821b069-caec-45c8-a940-28dc79163e76" />
 
 ---
-### QWIIC-Stecker
+### QWIIC-Stecker [⬆️](#lilygo-t-beam-1w)
 <img width="242" height="216" alt="grafik" src="https://github.com/user-attachments/assets/8e99959b-7b9b-415f-9cc3-98a9cf5135e7" />
 
 〰️ ☑️⭕️🚫⚠️🔴🟠🟡🟢🔵🟣⚫️⚪️🟤🔷🔹❗  
