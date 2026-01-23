@@ -14,8 +14,10 @@
 - [x] **LoRa**: SX1262 [Receive-Interrupt-Example](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/examples2/Receive_Interrupt)
 - [≈] **BATT** noch fehlerhaft [siehe #11](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/issues/11)
 - [x] **Temperaturmessung** und **Lüfter-Steuerung** (siehe auch https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/discussions/6)
-- [x] **LoRa**: SX1262 [Transmit-Interrupt-Example](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/examples2/Transmit_Interrupt) [**FW 4.35l.01.23.a**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/releases/tag/4.35l.01.23.a)
-- [≈] **GPS**: L76K [TinyGPS-Example](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/examples2/TinyGPS_Example) (LAT,LON,ALT,Sats,HDOP,Date, TimeUTC)
+- [x] **LoRa**: SX1262 [Transmit-Interrupt-Example](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/examples2/Transmit_Interrupt)
+- [x] **GPS**: L76K  [**FW 4.35l.01.23.b**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/releases/tag/4.35l.01.23.b) (LAT,LON,ALT,Sats,HDOP,Date, TimeUTC)
+- [ ] --setboostedgain {on|off}
+- [ ] --txpower {2..15} für gefundenem SX1261
 - [ ] **OTA** noch ausführlich testen
 - [ ] tools/**download_meshcom.py** u.a. noch anpassen
 - [ ] Freigabe von **Sensoren**
