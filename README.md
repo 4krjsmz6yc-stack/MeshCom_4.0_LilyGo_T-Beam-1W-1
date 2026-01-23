@@ -8,6 +8,8 @@
 * [Wie Kompilieren?](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/README.md#wie-kompilieren-%EF%B8%8F)
 * [Wie Modul Flashen?](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/README.md#wie-modul-flashen-%EF%B8%8F)
 * [Pin Map](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/README.md#pin-map-%EF%B8%8F)
+* [P5/P6 Stift-/Buchsenleiste](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/README.md#p5p6-stift-buchsenleiste-%EF%B8%8F)
+* [QWICC-Stecker](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/README.md#qwiic-stecker-%EF%B8%8F)
 
 ---
 ### Intention [⬆️](#lilygo-t-beam-1w)
@@ -22,10 +24,9 @@
 ### ToDo-List [⬆️](#lilygo-t-beam-1w)
 - [x] **Vorbereitung**: Start mit FW-Version 4.35k (fork von [**MeshCom-FW**  ](https://github.com/icssw-org/MeshCom-Firmware))
 - [x] [**Pin Map**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/README.md#pin-map-%EF%B8%8F)
-- [x] [**examples**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/examples#fw-beispiele) [**examples2**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/examples2#fw-beispiele)
-- [x] **OLED Example** `OLED_SH1106_Test` getestet mit **T3_V1.6.1** & **LilyGo T-Beam-1W**
-- [x] **SD-Card Example** `SD_Test` getestet mit **T3_V1.6.1** & **LilyGo T-Beam-1W**
-- [x] **LoRa Example** `RadioLib_Receive_Interrupt` & `RadioLib_Transmit_Interrupt` getestet mit **T3_V1.6.1** & **LilyGo T-Beam-1W**
+- [x] [**examples**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/examples#fw-beispiele)
+- [x] [**examples2**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/examples2#fw-beispiele)
+- [x] [**Implementierung** => FW 4.35l](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/MeshCom_FW_4/README.md#implementierung)
 
 ---
 ### Implementierung [⬆️](#lilygo-t-beam-1w)
@@ -123,10 +124,15 @@ siehe: [firmware-upload](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/
 ❌ = intern  
 🔷 = intern aber verwendbar
 
-❓ The PWR button is connected to the PMU:  
-* In shutdown mode, press the PWR button to turn on the power supply
-* In power-on mode, press the PWR button for 6 seconds (default time) to turn off the power supply
+---
+### P5/P6 Stift-/Buchsenleiste [⬆️](#lilygo-t-beam-1w)
+<img width="663" height="355" alt="grafik" src="https://github.com/user-attachments/assets/7821b069-caec-45c8-a940-28dc79163e76" />
 
+---
+### QWIIC-Stecker [⬆️](#lilygo-t-beam-1w)
+<img width="242" height="216" alt="grafik" src="https://github.com/user-attachments/assets/8e99959b-7b9b-415f-9cc3-98a9cf5135e7" />
+
+---
 〰️ ☑️⭕️🚫⚠️🔴🟠🟡🟢🔵🟣⚫️⚪️🟤🔷🔹❗  
 
 > \[!IMPORTANT]
@@ -152,17 +158,10 @@ siehe: [firmware-upload](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/
 * Das Problem ist aber, dass es keinen `DIO2_PIN` gibt und auch eine automatische Umschaltung via RadioLib kontraproduktiv ist. **SX126x** wird dann nicht mehr erkannt!
 * <ins>Es verbleibt lediglich die **Umschaltung RX/TX** über den **CTRL_PIN**.</ins>
 
-| ❓ DIO2 PIN | CTRL PIN | RF Switch Status                                               |
-| -------- | -------- | -------------------------------------------------------------- |
-| 1        | 0        | ANT and TX channels connected, PA turned on, LNA powered off   |
-| 0        | 1        | ANT and RX channels are connected, PA is closed, LNA is opened |
-
-
-
-
-<img width="663" height="355" alt="grafik" src="https://github.com/user-attachments/assets/7821b069-caec-45c8-a940-28dc79163e76" />
-
-<img width="242" height="216" alt="grafik" src="https://github.com/user-attachments/assets/8e99959b-7b9b-415f-9cc3-98a9cf5135e7" />
+| ❓ DIO2 PIN | CTRL PIN | RF Switch Status                                  |
+| --- | --- | -------------------------------------------------------------- |
+| 1   | 0   | ANT and TX channels connected, PA turned on, LNA powered off   |
+| 0   | 1   | ANT and RX channels are connected, PA is closed, LNA is opened |
 
 ---
 ### • Link zu den Originaldokumenten: [⬆️](#lilygo-t-beam-1w)  
