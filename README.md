@@ -51,7 +51,8 @@
 - [x] **SOC**: ESP32-S3-WROOM-1 N16R8 (16MB Flash (QIO 80Mhz) + 8MB QSPI PSRAM (OPI))
 - [x] **Display**: 1.3" SH1106 128 x 64
 - [x] **System Power**: SM8102ABC
-- [x] **LoRa RX**: SX1262 (MeshCom: 433.175 MHz BW: 250 CR: 4/6 SF: 11 SW: 0x2B Preamble: 32(8?))
+- [x] **LoRa RX/TX** SX1262 TCXO XY16P354 (400..433..520 MHz)
+  - SX1262 (MeshCom: 433.175 MHz BW:250 CR:4/6 SF:11 SW:0x2B Preamble:8)
 - [x] **LoRa TX-Power**: TPS562208DDCR (LDO_EN)
 - [x] **GPS**: L76K GNSS Module
 
