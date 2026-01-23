@@ -26,7 +26,7 @@
 - [x] [**Pin Map**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/README.md#pin-map-%EF%B8%8F)
 - [x] [**examples**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/examples#fw-beispiele)
 - [x] [**examples2**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/examples2#fw-beispiele)
-- [x] [**Implementierung** => FW 4.35l](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/MeshCom_FW_4/README.md#implementierung)
+- [≈] [**Implementierung** => FW 4.35l](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/MeshCom_FW_4/README.md#implementierung)
 
 ---
 ### Implementierung [⬆️](#lilygo-t-beam-1w)
