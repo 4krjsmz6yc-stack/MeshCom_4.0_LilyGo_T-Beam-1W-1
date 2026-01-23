@@ -22,8 +22,6 @@
 - [ ] Freigabe von **Sensoren**
 - [ ] **MQTT** (siehe auch https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/discussions/7)
 
-* LoRa RX/TX SX1262 TCXO XY16P354 (400..433..520 MHz)
-
 ---
-***22.1.2026 by OE3WAS - Wolfgang***
+***23.1.2026 by OE3WAS - Wolfgang***
 
