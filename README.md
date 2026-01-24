@@ -32,7 +32,7 @@
 ### Implementierung [⬆️](#lilygo-t-beam-1w)
 * geändete Dateien und offene Fragen siehe https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/issues/3
 - [x] LILYGO_T-BEAM-1W_433 => [Überführung in die Standard FW 4.35l](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/MeshCom_FW_4/README.md#implementierung)
-- [ ] Feldtest
+- [≈] Feldtest läuft
 - [ ] Akku-Pack
 - [ ] Gehäuse
 - [ ] Stift-/Buchse Leiste
@@ -180,5 +180,5 @@ https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series/blob/master/docs/en/t_beam_
 * Ich weise auf die gesetzlichen Bestimmungen bez. Elektrogeräten, Funkanlagen u.ä. hin, die von jedem Anwender selber einzuhalten sind.
 
 ---
-***:copyright: 23.1.2026 by OE3WAS - Wolfgang***
+***:copyright: 24.1.2026 by OE3WAS - Wolfgang***
 
