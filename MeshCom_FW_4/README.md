@@ -20,9 +20,9 @@
 - [x] --txpower {2..15} für gefundenem SX1261 [**FW 4.35l.01.24.a**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/releases/tag/4.35l.01.24.a) 
 - [ ] **OTA** noch ausführlich testen
 - [ ] tools/**download_meshcom.py** u.a. noch anpassen
-- [ ] Freigabe von **Sensoren**
+- [ ] Freigabe von **Sensoren** (über Zusatzplatine bzw. QWICC-Stecker I²C)
 - [ ] **MQTT** (siehe auch https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/discussions/7)
 
 ---
-***23.1.2026 by OE3WAS - Wolfgang***
+***24.1.2026 by OE3WAS - Wolfgang***
 
