@@ -610,7 +610,8 @@ void commandAction(char *umsg_text, bool ble)
             //value timer
             Serial.printf("--ptime 99 messuring interval minutes\n");
 
-            #if defined(SX126X_V3) || defined(SX1262_E290) || defined(SX1262X) || defined(SX126X) || defined(SX1262_V3)
+            #if defined(SX126X_V3) || defined(SX1262_E290) || defined(SX1262X) || defined(SX126X) || \
+                defined(SX1262_V3) || defined(USING_SX1262)
                 delay(100);
                 Serial.printf("--setboostedgain    on/off  enable/disable boosted rx gain\n");
             #endif
@@ -2111,7 +2112,8 @@ void commandAction(char *umsg_text, bool ble)
         
         return;
     }
-    #if defined(SX126X_V3) || defined(SX1262_E290) || defined(SX1262X) || defined(SX126X) || defined(SX1262_V3)
+    #if defined(SX126X_V3) || defined(SX1262_E290) || defined(SX1262X) || defined(SX126X) || \
+        defined(SX1262_V3) || defined(USING_SX1262)
     else
     if(commandCheck(msg_text+2, (char*)"setboostedgain on") == 0)
     {

@@ -98,7 +98,7 @@ definitions for LilyGo T-BEAM 1W Board OE3WAS
 #define RF_FREQUENCY 433.175000 // 432.900000   // Hz
 #define LORA_APRS_FREQUENCY 433.775000 // 432.900000   // Hz
 
-//todo #define BOARD_COUNTRY 5   // ???
+#define BOARD_COUNTRY 8   // EU8
 
 #define ENABLE_GPS
 #define GPS_L76K
@@ -117,11 +117,12 @@ definitions for LilyGo T-BEAM 1W Board OE3WAS
 #define CURRENT_LIMIT 140 // in mA +20dBm are about 120mA -> check if enough headroom 
 #define TX_POWER_MAX 15  // SX1262 max 22 dBm bzw. SX1261 15 dBm
 #define TX_POWER_MIN 2
+#define TX_OUTPUT_POWER 8
+
 #define LORA_PREAMBLE_LENGTH DEFAULT_PREAMPLE_LENGTH  // Same for Tx and Rx
 
 //todo #define WAIT_TX x         // waiting after Lora TX in doTX() >800µs
 
-#define TX_OUTPUT_POWER 8
 
 /**
  * RadioLib Coding Rate: Allowed values range from 5 to 8.
