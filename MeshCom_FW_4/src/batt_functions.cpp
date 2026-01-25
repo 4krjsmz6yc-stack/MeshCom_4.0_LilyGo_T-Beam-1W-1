@@ -240,7 +240,7 @@ void init_batt(void)
 	analogReadResolution(12);
 
 #elif defined(BOARD_TBEAM_1W)
-	analogSetAttenuation(ADC_11db); // bis ≈4,3V
+	analogSetAttenuation(ADC_11db); // bis ≈4,3V an GPIO
 	analogReadResolution(12);
 	
 #elif defined(BOARD_TRACKER)

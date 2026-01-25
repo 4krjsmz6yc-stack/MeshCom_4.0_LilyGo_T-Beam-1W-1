@@ -1132,8 +1132,16 @@ void sendDisplayTime()
         snprintf(cbatt, sizeof(cbatt), "  USB");
  #endif
 
+ #if defined(BOARD_TBEAM_1W)
+    // [OE3WAS] 2S-Akku nom. 7.4V (LiPo = 5.0 .. 8.4 V)
+    // wenn USB aber kein Akku, dann wird eine Spannung ≈>2V gemessen, durch Fehlströme erzeugt
+    if(global_batt < 5000.0)
+        snprintf(cbatt, sizeof(cbatt), " USB");
+ #endif
+
     // nur alle 15 sekunden
-    if(meshcom_settings.node_date_second == 0 || meshcom_settings.node_date_second == 15 || meshcom_settings.node_date_second == 30 || meshcom_settings.node_date_second == 45 || bOneButton)
+    if(meshcom_settings.node_date_second == 0 || meshcom_settings.node_date_second == 15 || meshcom_settings.node_date_second == 30 || \
+       meshcom_settings.node_date_second == 45 || bOneButton)
     {
         char print_text[500];
         
@@ -1181,6 +1189,13 @@ void sendDisplayMainline()
 
  #if defined(BOARD_E290)
     if(global_batt > 4300.0)
+        snprintf(cbatt, sizeof(cbatt), " USB");
+ #endif
+
+ #if defined(BOARD_TBEAM_1W)
+    // [OE3WAS] 2S-Akku nom. 7.4V (LiPo = 5.0 .. 8.4 V)
+    // wenn USB aber kein Akku, dann wird eine Spannung ≈>2V gemessen, durch Fehlströme erzeugt
+    if(global_batt < 5000.0)
         snprintf(cbatt, sizeof(cbatt), " USB");
  #endif
 
