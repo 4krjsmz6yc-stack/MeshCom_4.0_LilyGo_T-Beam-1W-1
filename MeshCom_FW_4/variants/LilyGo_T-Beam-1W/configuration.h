@@ -102,20 +102,20 @@ definitions for LilyGo T-BEAM 1W Board OE3WAS
 
 #define ENABLE_GPS
 #define GPS_L76K
-//#define ENABLE_BMX280
-//#define ENABLE_BMP390
-//#define ENABLE_AHT20
-//#define ENABLE_SHT21
-//#define ENABLE_BMX680
-//#define ENABLE_MCP23017
-//#define ENABLE_INA226
-//#define ENABLE_MC811
-//#define ENABLE_RTC
+#define ENABLE_BMX280
+#define ENABLE_BMP390
+#define ENABLE_AHT20
+#define ENABLE_SHT21
+#define ENABLE_BMX680
+#define ENABLE_MCP23017
+#define ENABLE_INA226
+#define ENABLE_MC811
+#define ENABLE_RTC
 //#define ENABLE_SOFTSER
 
 
 #define CURRENT_LIMIT 140 // in mA +20dBm are about 120mA -> check if enough headroom 
-#define TX_POWER_MAX 15  // SX1262 max 22 dBm bzw. SX1261 15 dBm
+#define TX_POWER_MAX 22  // SX1262 max 22 dBm bzw. SX1261 15 dBm
 #define TX_POWER_MIN 2
 #define TX_OUTPUT_POWER 8
 
