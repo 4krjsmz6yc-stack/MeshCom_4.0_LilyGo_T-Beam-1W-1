@@ -24,5 +24,5 @@
 - [ ] **MQTT** (siehe auch https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/discussions/7)
 
 ---
-***25.1.2026 by OE3WAS - Wolfgang***
+***26.1.2026 by OE3WAS - Wolfgang***
 
