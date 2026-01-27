@@ -24,8 +24,19 @@ Mit 18650-Akkus, BMS und 3D-Druck-Teilen können DIY-Lösungen entstehen.
 * https://www.thingiverse.com/thing:6323710
 * ...
 
-BMS-2S HW-391  
+### mögliche Akkus
+Um die Länge des T-Beam-1W nicht zu überschreiten, wäre es grundsätzlich möglich beispielsweise folgende Akkus einsetzen:
+
+* 18350 https://www.akkushop-austria.at/keeppower-18350-1200mah-3-6v-3-7v-li-ion-akku-geschuetzt-abmessungen-beachten-ca.-39x18-6mm
+* 18490 https://www.akkushop-austria.at/nitecore-imr-18490-li-ion-akku-1100mah-mit-flachem-kopf-am-pluspol-abmessungen-ca.-49x18mm
+
+#### BMS-2S HW-391  
 <img alt="BMS-2S" src="https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/NP-F550_AccuPack/BMS-2S.jpg" />  
-USB-C_Charge-Booster  
+
+#### BMS-2S HX-2S-JH20 V1.0
+![BMS_HX-2S-JH20_V1 0](https://github.com/user-attachments/assets/bd1c6fcc-d112-4e4e-96f8-72c411ef7c54)
+
+
+#### USB-C Charge-Booster  
 <img alt="SB-C_Charge-Booster" src="https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/NP-F550_AccuPack/USB-C_Charge-Booster.jpg" />
 
