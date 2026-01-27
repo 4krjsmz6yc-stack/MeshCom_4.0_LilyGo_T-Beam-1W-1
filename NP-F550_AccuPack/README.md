@@ -29,6 +29,7 @@ Um die Länge des T-Beam-1W nicht zu überschreiten, wäre es grundsätzlich mö
 
 * 18350 https://www.akkushop-austria.at/keeppower-18350-1200mah-3-6v-3-7v-li-ion-akku-geschuetzt-abmessungen-beachten-ca.-39x18-6mm
 * 18490 https://www.akkushop-austria.at/nitecore-imr-18490-li-ion-akku-1100mah-mit-flachem-kopf-am-pluspol-abmessungen-ca.-49x18mm
+* u.v.a.
 
 #### BMS-2S HW-391  
 <img alt="BMS-2S" src="https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/NP-F550_AccuPack/BMS-2S.jpg" />  
@@ -39,4 +40,8 @@ Um die Länge des T-Beam-1W nicht zu überschreiten, wäre es grundsätzlich mö
 
 #### USB-C Charge-Booster  
 <img alt="SB-C_Charge-Booster" src="https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/blob/main/NP-F550_AccuPack/USB-C_Charge-Booster.jpg" />
+
+---
+***:copyright: 27.1.2026 by OE3WAS - Wolfgang***
+
 
