@@ -129,10 +129,10 @@ siehe: [firmware-upload](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/
 
 ---
 ### QWIIC-Stecker [⬆️](#lilygo-t-beam-1w)
-sw = GND, rt = +3.3V, bl = SDA, gb = SCL  
 <img width="242" height="216" alt="grafik" src="https://github.com/user-attachments/assets/8e99959b-7b9b-415f-9cc3-98a9cf5135e7" />
 
 #### Hier CN2 = I2C Adapterkabel eingesteckt
+sw = GND, rt = +3.3V, bl = SDA, gb = SCL  
 <img width="400" alt="grafik" src="https://github.com/user-attachments/assets/05378f55-cb6c-42f1-9869-e43d30c664f2" />
 
 ---
