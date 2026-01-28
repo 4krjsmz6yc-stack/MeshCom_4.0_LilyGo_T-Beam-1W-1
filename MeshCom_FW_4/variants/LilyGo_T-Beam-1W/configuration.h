@@ -115,7 +115,7 @@ definitions for LilyGo T-BEAM 1W Board OE3WAS
 
 
 #define CURRENT_LIMIT 140 // in mA +20dBm are about 120mA -> check if enough headroom 
-#define TX_POWER_MAX 22  // SX1262 max 22 dBm bzw. SX1261 15 dBm
+#define TX_POWER_MAX 22  // SX1262 max 22 dBm
 #define TX_POWER_MIN 2
 #define TX_OUTPUT_POWER 8
 

@@ -1134,6 +1134,8 @@ void esp32setup()
         if(tx_power < TX_POWER_MIN)
             tx_power= TX_POWER_MIN;
 
+        meshcom_settings.node_power = tx_power;  // [OE3WAS] für den Ring der Sicherheit ;-) ??
+        save_settings();
         Serial.printf("[LoRa]...RF_POWER: %d dBm\n", tx_power);
 
         if (radio.setOutputPower(tx_power) == RADIOLIB_ERR_INVALID_OUTPUT_POWER) {
