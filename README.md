@@ -38,7 +38,7 @@
 - [ ] Stift-/Buchse Leiste
 - [ ] Zusatz-PCBs
 - [ ] SD-Card (siehe auch https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/discussions/7)
-- [ ] 2x externe 4-pol Stecker RX/TX & I2C (QWIIC-Typ)  
+- [x] 2x externe 4-pol Stecker RX/TX & I2C (QWIIC-Typ)  
   - https://www.amazon.de/gp/product/B08HQ1VSVL/  
   - https://exp-tech.de/blogs/blog/sparkfun-qwiic-wiki  
   - Der PCB-Anschluss ist ein **SM04B-SRSS**. Der Gegenstecker ist ein **SHR04V-S-B**.  
@@ -129,6 +129,7 @@ siehe: [firmware-upload](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/
 
 ---
 ### QWIIC-Stecker [⬆️](#lilygo-t-beam-1w)
+sw = GND, rt = +3.3V, bl = SDA, gb = SCL  
 <img width="242" height="216" alt="grafik" src="https://github.com/user-attachments/assets/8e99959b-7b9b-415f-9cc3-98a9cf5135e7" />
 
 #### Hier CN2 = I2C Adapterkabel eingesteckt
@@ -140,12 +141,10 @@ siehe: [firmware-upload](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/
 > \[!IMPORTANT]
 > 
 > **LDO_EN** pin is control pin inside the module:
-> 
 > 1. High level turns on the Radio
 > 2. Low level turns off the Radio
 > 
 > **LoRa_CTL** pin is internal LNA power control of the module:
-> 
 > 1. When receiving data, set it to high level and turn on the LNA power;
 > 2. When transmitting data and sleeping, set it to low level and turn off the LNA power.
 
@@ -183,5 +182,5 @@ https://github.com/Xinyuan-LilyGO/LilyGo-LoRa-Series/blob/master/docs/en/t_beam_
 * Ich weise auf die gesetzlichen Bestimmungen bez. Elektrogeräten, Funkanlagen u.ä. hin, die von jedem Anwender selber einzuhalten sind.
 
 ---
-***:copyright: 24.1.2026 by OE3WAS - Wolfgang***
+***:copyright: 28.1.2026 by OE3WAS - Wolfgang***
 
