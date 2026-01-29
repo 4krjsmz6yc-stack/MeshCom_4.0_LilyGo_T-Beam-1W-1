@@ -15,6 +15,7 @@ unsigned long analog_oversample_timer = 0;
 // ADC-filtering variables
 uint16_t ADCraw = 0;
 uint32_t ADCmV = 0;
+float raw = 0;
 float ADCalpha = 0.1;
 float ADCexp1 = 0.0;
 float ADCexp1pre = 0.0;
@@ -61,8 +62,8 @@ void loop_ADCFunctions()
             ADCslope = meshcom_settings.node_analog_slope;
             if (ADCslope == 0.0) ADCslope = 1.0;
             ADCoffset = meshcom_settings.node_analog_offset;
-            int ADCatten = (int)meshcom_settings.node_analog_atten;
             ADCalpha = meshcom_settings.node_analog_alpha - (int)meshcom_settings.node_analog_alpha; // 0.001 .. 0.999
+            if (ADCalpha == 0.0) { ADCalpha = 0.001; }
 
             int ADCintervall = (int)meshcom_settings.node_analog_alpha % 100;
             if ((analog_oversample_timer + std::max(2,ADCintervall)) < millis())  //min. 2ms, max. 99ms
@@ -75,7 +76,7 @@ void loop_ADCFunctions()
                 ADCmV = analogReadMilliVolts(meshcom_settings.node_analog_pin);  //inkl. Vref, Atten, Characteristic
                 SampleCount++;
                 // 12bit value [0 .. 4095] als default angenommen, muss ggf angepasst werden
-                float raw = ADCslope * (float)ADCmV * meshcom_settings.node_analog_faktor + ADCoffset; // Faktor & Offset & Slope
+                raw = ADCslope * (float)ADCmV * meshcom_settings.node_analog_faktor + ADCoffset; // Faktor & Offset & Slope
                 if (ADCexp1pre==0) {ADCexp1pre = raw;}  //langsamen Start beschleunigen
                 if (ADCexp12pre==0) {ADCexp12pre = raw;}
 
@@ -94,9 +95,9 @@ void loop_ADCFunctions()
             int ADCshowtime = (int)meshcom_settings.node_analog_alpha / 100;
             if ((analog_show_timer + (1000 * std::max(1,ADCshowtime))) < millis())  // 1 .. 99s
             {
-                Serial.printf("[ADC1]; GPIO%d; %s; %u; %.3f; %u; %.1f; %.1f\n",
+                Serial.printf("[ADC1]; GPIO%d; %s; %u; %.3f; %u; %u; %.1f; %.1f; %.1f\n",
                     meshcom_settings.node_analog_pin, getTimeString().c_str(),
-                    SampleCount, ADCalpha, ADCraw, ADCexp1, ADCexp2);
+                    SampleCount, ADCalpha, ADCraw, ADCmV, raw, ADCexp1, ADCexp2);
                 analog_show_timer = millis();
                 SampleCount = 0;
 
