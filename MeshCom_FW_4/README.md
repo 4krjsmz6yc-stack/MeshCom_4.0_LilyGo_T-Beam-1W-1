@@ -1,8 +1,7 @@
 <h1 align = "center">🌟LilyGo T-Beam-1W🌟</h1>
 
-* [Implementierung](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/edit/main/MeshCom_FW_4/README.md#implementierung---meshcom-fw-435l-ddmm%CE%B1)
-* [ADC-Funktion](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/edit/main/MeshCom_FW_4/README.md#adc-funktion)
-
+* [Implementierung](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/MeshCom_FW_4#implementierung---meshcom-fw-435l-ddmm%CE%B1)
+* [ADC-Funktion](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/tree/main/MeshCom_FW_4#adc-funktion)
 ---
 ## Implementierung - MeshCom FW 4.35l-dd.mm.α
 - [x] Start with Fork **FW-Version 4.35k** from [**MeshCom-FW**  ](https://github.com/icssw-org/MeshCom-Firmware)
