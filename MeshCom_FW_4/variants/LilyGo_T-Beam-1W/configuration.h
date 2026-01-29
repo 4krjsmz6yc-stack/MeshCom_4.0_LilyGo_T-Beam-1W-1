@@ -64,7 +64,8 @@ definitions for LilyGo T-BEAM 1W Board OE3WAS
 #define FAN_CTRL                    (41)
 
 #define ADC_PIN                     4
-#define BATTERY_PIN ADC_PIN // A battery voltage measurement pin, voltage divider connected here to measure battery voltage
+#define BATTERY_PIN                 4 // A battery voltage measurement pin
+// voltage divider connected here to measure battery voltage
 #define BAT_ADC_PULLUP_RES          300000.0
 #define BAT_ADC_PULLDOWN_RES        150000.0
 #define BAT_MAX_VOLTAGE             7.4
