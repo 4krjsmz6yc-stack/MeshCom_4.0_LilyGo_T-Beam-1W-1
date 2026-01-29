@@ -19,12 +19,13 @@
 - [x] --setboostedgain {on|off}
 - [x] --txpower {2..22} für gefundenem SX1261
 - [x] Freigabe aller I²C **Sensoren** (über Zusatzplatine bzw. QWICC-Stecker I²C)
-- [x] **OTA**  [**FW 4.35l.01.27.a**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/releases/tag/4.35l.01.27.a) 
+- [x] **OTA**
+- [x] **ADC-Funktion** verbessert [**FW 4.35l.01.29.a**](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/releases/tag/4.35l.01.29.a) 
 - [ ] tools/**download_meshcom.py** u.a. noch anpassen
 - [ ] **`--pong`** Befehl & Verfahren für **Ping-Pong** Modus [#26](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/issues/26)
 - [ ] **`--temp`** Befehl für Anzeige der NTC-Temperatur & Fan-Status [#14](https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/issues/14)
 - [ ] **MQTT** (siehe auch https://github.com/karamo/MeshCom_4.0_LilyGo_T-Beam-1W/discussions/7)
 
 ---
-***28.1.2026 by OE3WAS - Wolfgang***
+***29.1.2026 by OE3WAS - Wolfgang***
 
