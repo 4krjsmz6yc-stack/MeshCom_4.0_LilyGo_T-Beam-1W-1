@@ -32,16 +32,16 @@
 ---
 ## ADC-Funktion
 
-<ins>**DoxyGen Beschreibung**</ins>  
+<ins>• **DoxyGen Beschreibung**</ins>  
 <img width="955" height="425" alt="grafik" src="https://github.com/user-attachments/assets/220066d3-4aa3-409a-8f6c-3a484f615e32" />
 
-<ins>**Debug Ausgabe**</ins>  
+<ins>• **Debug Ausgabe**</ins>  
 <img width="581" height="62" alt="grafik" src="https://github.com/user-attachments/assets/ae6fa94b-bdab-42df-ae3f-5d3d6a8bbd43" />  
 
-<ins>**JSON Struktur Definition**</ins>  
+<ins>• **JSON Struktur Definition**</ins>  
 <img width="439" height="297" alt="grafik" src="https://github.com/user-attachments/assets/9bf33132-cbf5-4400-8c8e-1bd232c26ad1" />  
 
-<ins>**JSON Ausgabe**</ins>  
+<ins>• **JSON Ausgabe**</ins>  
 <img width="689" height="59" alt="grafik" src="https://github.com/user-attachments/assets/5d6b38a9-76f6-4fa8-b729-2fcb058c1e09" />
 
 ---
